@@ -1,0 +1,4 @@
+/.github/workflows/ @TheDancingDeveloper-org/owners
+/CODEOWNERS @TheDancingDeveloper-org/owners
+/runner-exceptions.json @TheDancingDeveloper-org/owners
+/scripts/ @TheDancingDeveloper-org/owners

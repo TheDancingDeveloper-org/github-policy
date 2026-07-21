@@ -17,4 +17,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Audit workflow runner policy and exceptions
-        run: scripts/audit-workflows.sh .
+        run: bash scripts/audit-workflows.sh .

@@ -35,7 +35,24 @@ intentional: it surfaces missing runner-group membership instead of letting a
 repository quietly fall back to GitHub-hosted runners, which is exactly how the
 2026-08-03 violations arose.
 
+### Why the gate inlines its checker
+
+This repository is **private**. A target repository cannot fetch
+`scripts/audit-workflows.sh` from it — `raw.githubusercontent.com` returns 404
+unauthenticated, and the target repo's `GITHUB_TOKEN` has no read access here.
+The first version of the gate tried exactly that and failed with `curl: (22)
+404` on its own pull request.
+
+So `enforce-runner-policy.yml` carries the checker inline. The ruleset already
+delivers that file from this repository, so there is still one source of truth
+— it is the workflow. `scripts/audit-workflows.sh` remains the local checker
+used by `audit.yml`. **Keep the two in sync**; they implement the same two
+rules (explicit `self-hosted`, no dynamic `runs-on`).
+
 ## Exceptions
+
+`runner-exceptions.json` is consumed by `audit.yml` only, which fails on any
+entry whose `expires_on` has passed so exceptions cannot rot silently:
 
 ```json
 { "schema_version": 1,
@@ -44,8 +61,12 @@ repository quietly fall back to GitHub-hosted runners, which is exactly how the
       "expires_on": "2026-09-30" } ] }
 ```
 
-The audit fails on any exception whose `expires_on` has passed, so exceptions
-cannot rot silently.
+The org-wide gate cannot read that file (see above), so it is strict. A
+genuine, owner-approved exception is expressed in the ruleset itself — exclude
+the repository in the ruleset conditions, or add a bypass actor. Both are
+visible in the ruleset UI and the organization audit log, which is a stronger
+record than a JSON entry. Record the reason and expiry in
+`runner-exceptions.json` as well so the daily expiry check still surfaces it.
 
 ## Related
 

@@ -1,19 +1,27 @@
 # Runner policy gate.
 #
-# This workflow is designed to be attached to every repository in the
-# organization through an organization ruleset ("required workflows"), so it
-# runs in the *target* repository's context and its check must pass before a
-# pull request can merge.
+# Attached to every repository in the organization through an organization
+# ruleset ("workflows" rule), so it runs in the *target* repository's context
+# and its check must pass before a pull request can merge.
 #
-# It deliberately fetches the policy script over HTTPS rather than checking out
-# this repository into the workspace: a nested checkout would place this repo's
-# own workflows inside the scanned tree and conflate the two results.
+# The checker is inlined deliberately. This repository is private, so a target
+# repository cannot fetch scripts/audit-workflows.sh from it: raw.github-
+# usercontent.com returns 404 unauthenticated, and the target repo's
+# GITHUB_TOKEN has no read access here either. The ruleset already delivers
+# this file from this repository, so the policy still has a single source of
+# truth — it is this workflow. Keep the logic below in sync with
+# scripts/audit-workflows.sh, which remains the local checker for this repo.
 #
-# Fail-closed note: this job requests self-hosted labels. A repository that has
-# not been added to the `public-node-b` runner group has no runner that can
-# accept it, so the check stays queued and the pull request cannot merge. That
-# is intended — it forces runner-group membership to be configured rather than
-# letting a repository quietly fall back to GitHub-hosted runners.
+# Exceptions: this gate is strict and reads no exceptions file (it cannot see
+# one). A genuine, owner-approved exception is expressed by excluding the
+# repository in the ruleset's conditions, or by adding a bypass actor — both
+# are visible in the ruleset UI and in the org audit log.
+#
+# Fail-closed note: this job requests self-hosted labels. A repository not yet
+# added to the `public-node-b` runner group has no runner able to accept it, so
+# the check stays queued and the pull request cannot merge. That is intended —
+# it forces runner-group membership to be configured rather than letting a
+# repository quietly fall back to GitHub-hosted runners.
 
 name: Runner policy
 
@@ -32,18 +40,67 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Fetch organization policy
-        env:
-          POLICY_RAW: https://raw.githubusercontent.com/TheDancingDeveloper-org/github-policy/main
+      - name: Audit runner selection
+        shell: bash
         run: |
           set -euo pipefail
-          mkdir -p "$RUNNER_TEMP/policy"
-          curl -fsSL -o "$RUNNER_TEMP/policy/audit-workflows.sh" \
-            "$POLICY_RAW/scripts/audit-workflows.sh"
-          curl -fsSL -o "$RUNNER_TEMP/policy/runner-exceptions.json" \
-            "$POLICY_RAW/runner-exceptions.json"
+          python3 - <<'PY'
+          import pathlib
+          import re
+          import sys
 
-      - name: Audit runner selection
-        env:
-          RUNNER_EXCEPTION_FILE: ${{ runner.temp }}/policy/runner-exceptions.json
-        run: bash "$RUNNER_TEMP/policy/audit-workflows.sh" .
+          def indent(line: str) -> int:
+              return len(line) - len(line.lstrip(' '))
+
+          def values(lines: list[str], index: int) -> list[str]:
+              line = lines[index]
+              base = indent(line)
+              value = line.split(':', 1)[1].split('#', 1)[0].strip()
+              if value:
+                  return [p.strip().strip('"\'') for p in value.strip('[]').split(',') if p.strip()]
+              result = []
+              for child in lines[index + 1:]:
+                  stripped = child.strip()
+                  if not stripped or stripped.startswith('#'):
+                      continue
+                  if indent(child) <= base:
+                      break
+                  match = re.match(r'^-\s*([^#]+)', stripped)
+                  if match:
+                      result.append(match.group(1).strip().strip('"\''))
+              return result
+
+          failed = False
+          workflows = sorted(
+              p for pattern in ('.github/workflows/*.yml', '.github/workflows/*.yaml')
+              for p in pathlib.Path('.').glob(pattern)
+          )
+          if not workflows:
+              print('no workflows found; nothing to audit')
+
+          for path in workflows:
+              lines = path.read_text(encoding='utf-8').splitlines()
+              for number, line in enumerate(lines):
+                  if not re.match(r'^\s*runs-on\s*:', line, re.I):
+                      continue
+                  selected = values(lines, number)
+                  if not any(v.lower() == 'self-hosted' for v in selected):
+                      print(f'{path}:{number + 1}: runner selection is not explicitly '
+                            f'self-hosted -> {selected}', file=sys.stderr)
+                      failed = True
+                  if any('${{' in v for v in selected):
+                      print(f'{path}:{number + 1}: dynamic runner selection requires '
+                            f'explicit review', file=sys.stderr)
+                      failed = True
+
+          if failed:
+              print('', file=sys.stderr)
+              print('Organization policy: every job must select a self-hosted runner '
+                    'explicitly, e.g.', file=sys.stderr)
+              print('  runs-on: [self-hosted, node-b, linux, x64]', file=sys.stderr)
+              print('  runs-on: [self-hosted, node-b, linux, x64, docker, publish]  '
+                    '# needs Docker', file=sys.stderr)
+              sys.exit(1)
+
+          print(f'ok: {len(workflows)} workflow file(s) audited, all self-hosted')
+          PY

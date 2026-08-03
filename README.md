@@ -11,43 +11,42 @@ This repository is the source of truth for organization-wide CI policy.
 
 ## How enforcement actually works
 
-There are two workflows, and the distinction matters:
-
-| Workflow | Scope | Role |
+| File | Scope | Role |
 |---|---|---|
-| `enforce-runner-policy.yml` | The repository it runs in | **The gate.** Attached to every repository by an organization ruleset, so it runs in each target repository's context and must pass before a pull request merges. |
-| `audit.yml` | This repository only | Self-audit, plus the daily expiry check on `runner-exceptions.json`. |
+| `.github/workflows/runner-policy-reusable.yml` | The **calling** repository | **The gate.** Reusable workflow; runs with the caller's context so `actions/checkout` fetches the calling repo. |
+| `templates/runner-policy-stub.yml` | — | Copy into each repo as `.github/workflows/runner-policy.yml`. Three lines of real content. |
+| `.github/workflows/audit.yml` | This repository only | Self-audit, plus the daily expiry check on `runner-exceptions.json`. |
 
 `audit.yml` was previously named "Organization workflow policy audit", which
 was misleading: it checks out only this repository, so it audited exactly one
 repository — itself — and stayed green while three repositories in the
 organization ran on `ubuntu-latest`. Nothing about the checker was wrong; it
 was never pointed at the organization. Do not re-add organization-wide
-ambitions to that file. Per-repository enforcement is the correct mechanism
-because it needs no cross-repository token.
+ambitions to that file.
 
-### Fail-closed behaviour
+### Why not an organization ruleset
 
-`enforce-runner-policy.yml` requests self-hosted labels. A repository that has
-not been added to the `public-node-b` runner group has no runner able to accept
-the job, so the check stays queued and the pull request cannot merge. This is
-intentional: it surfaces missing runner-group membership instead of letting a
-repository quietly fall back to GitHub-hosted runners, which is exactly how the
-2026-08-03 violations arose.
+A ruleset with the `workflows` ("required workflows") rule would attach the
+gate to every repository automatically with no per-repo file. **It does not
+work on this organization.** That rule is a GitHub Enterprise feature and this
+org is on the **Team** plan. The REST API accepts the ruleset and reports it
+`active`, but it never executes — no check ever appears on a pull request — and
+`/rulesets/rule-suites` returns 403 "Upgrade to GitHub Enterprise". This was
+built, observed to do nothing, and deleted on 2026-08-03. Do not rebuild it
+without an Enterprise upgrade; a gate that reports active and enforces nothing
+is worse than no gate.
 
-### Why the gate inlines its checker
+The reusable-workflow approach works on Team because this repository has
+Actions access set to `organization`, which lets private-repo workflows be
+called org-wide.
 
-This repository is **private**. A target repository cannot fetch
-`scripts/audit-workflows.sh` from it — `raw.githubusercontent.com` returns 404
-unauthenticated, and the target repo's `GITHUB_TOKEN` has no read access here.
-The first version of the gate tried exactly that and failed with `curl: (22)
-404` on its own pull request.
+### Rollout, per repository
 
-So `enforce-runner-policy.yml` carries the checker inline. The ruleset already
-delivers that file from this repository, so there is still one source of truth
-— it is the workflow. `scripts/audit-workflows.sh` remains the local checker
-used by `audit.yml`. **Keep the two in sync**; they implement the same two
-rules (explicit `self-hosted`, no dynamic `runs-on`).
+1. Copy `templates/runner-policy-stub.yml` to `.github/workflows/runner-policy.yml`.
+2. Add `runner-policy` to the branch's required status checks. **Until this
+   step the gate reports but does not block.**
+3. Ensure the repo is in the `public-node-b` runner group, or the job has no
+   runner and the check never completes.
 
 ## Exceptions
 

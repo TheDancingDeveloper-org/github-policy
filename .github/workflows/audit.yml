@@ -1,4 +1,16 @@
-name: Organization workflow policy audit
+# Self-audit for this repository only.
+#
+# Renamed 2026-08-03. This workflow was previously called "Organization
+# workflow policy audit", but it checks out only this repository and runs the
+# audit against `.`, so it has never inspected any other repository. Its own
+# workflows are compliant, so it reported green while three repositories in the
+# organization ran on GitHub-hosted runners.
+#
+# Organization-wide enforcement is `enforce-runner-policy.yml`, attached to
+# every repository through an organization ruleset so it runs in each target
+# repository's own context. Keep this file scoped to this repository.
+
+name: Policy repository self-audit
 
 on:
   pull_request:
@@ -16,5 +28,5 @@ jobs:
     runs-on: [self-hosted, node-b, linux, x64]
     steps:
       - uses: actions/checkout@v4
-      - name: Audit workflow runner policy and exceptions
+      - name: Audit this repository's workflows and exception expiry
         run: bash scripts/audit-workflows.sh .

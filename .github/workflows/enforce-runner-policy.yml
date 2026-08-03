@@ -70,6 +70,13 @@ jobs:
                       result.append(match.group(1).strip().strip('"\''))
               return result
 
+          # Assembled at runtime on purpose. A literal dollar-brace-brace in
+          # this file would be parsed as a GitHub Actions expression before the
+          # script ever runs, which breaks the whole workflow -- the first
+          # version of this file failed with an unresolvable workflow name for
+          # exactly that reason.
+          EXPR = '$' + '{' + '{'
+
           failed = False
           workflows = sorted(
               p for pattern in ('.github/workflows/*.yml', '.github/workflows/*.yaml')
@@ -88,7 +95,7 @@ jobs:
                       print(f'{path}:{number + 1}: runner selection is not explicitly '
                             f'self-hosted -> {selected}', file=sys.stderr)
                       failed = True
-                  if any('${{' in v for v in selected):
+                  if any(EXPR in v for v in selected):
                       print(f'{path}:{number + 1}: dynamic runner selection requires '
                             f'explicit review', file=sys.stderr)
                       failed = True

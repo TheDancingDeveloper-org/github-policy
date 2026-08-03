@@ -1,0 +1,49 @@
+# Runner policy gate.
+#
+# This workflow is designed to be attached to every repository in the
+# organization through an organization ruleset ("required workflows"), so it
+# runs in the *target* repository's context and its check must pass before a
+# pull request can merge.
+#
+# It deliberately fetches the policy script over HTTPS rather than checking out
+# this repository into the workspace: a nested checkout would place this repo's
+# own workflows inside the scanned tree and conflate the two results.
+#
+# Fail-closed note: this job requests self-hosted labels. A repository that has
+# not been added to the `public-node-b` runner group has no runner that can
+# accept it, so the check stays queued and the pull request cannot merge. That
+# is intended — it forces runner-group membership to be configured rather than
+# letting a repository quietly fall back to GitHub-hosted runners.
+
+name: Runner policy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runner-policy:
+    runs-on: [self-hosted, node-b, linux, x64]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Fetch organization policy
+        env:
+          POLICY_RAW: https://raw.githubusercontent.com/TheDancingDeveloper-org/github-policy/main
+        run: |
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/policy"
+          curl -fsSL -o "$RUNNER_TEMP/policy/audit-workflows.sh" \
+            "$POLICY_RAW/scripts/audit-workflows.sh"
+          curl -fsSL -o "$RUNNER_TEMP/policy/runner-exceptions.json" \
+            "$POLICY_RAW/runner-exceptions.json"
+
+      - name: Audit runner selection
+        env:
+          RUNNER_EXCEPTION_FILE: ${{ runner.temp }}/policy/runner-exceptions.json
+        run: bash "$RUNNER_TEMP/policy/audit-workflows.sh" .

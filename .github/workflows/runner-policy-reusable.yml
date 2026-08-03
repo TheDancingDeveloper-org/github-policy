@@ -1,35 +1,41 @@
-# Runner policy gate.
+# Reusable runner-policy gate.
 #
-# Attached to every repository in the organization through an organization
-# ruleset ("workflows" rule), so it runs in the *target* repository's context
-# and its check must pass before a pull request can merge.
+# Called by a small stub workflow in every repository. Reusable workflows run
+# with the CALLER's context, so actions/checkout below checks out the calling
+# repository and the audit applies to that repository's workflows.
 #
-# The checker is inlined deliberately. This repository is private, so a target
+# Why this rather than an organization ruleset "required workflows" rule: that
+# rule is a GitHub Enterprise feature. This organization is on the Team plan.
+# The REST API accepts such a ruleset and reports it active, but it never
+# executes and the rule-suites endpoint returns 403 "Upgrade to GitHub
+# Enterprise" -- a gate that looks real and does nothing. Verified 2026-08-03.
+#
+# Making this block a merge requires adding `runner-policy` as a required
+# status check on the calling repository's protected branch.
+#
+# The checker is inlined deliberately. This repository is private, so a calling
 # repository cannot fetch scripts/audit-workflows.sh from it: raw.github-
-# usercontent.com returns 404 unauthenticated, and the target repo's
-# GITHUB_TOKEN has no read access here either. The ruleset already delivers
-# this file from this repository, so the policy still has a single source of
-# truth — it is this workflow. Keep the logic below in sync with
-# scripts/audit-workflows.sh, which remains the local checker for this repo.
+# usercontent.com returns 404 unauthenticated, and the caller's GITHUB_TOKEN
+# has no read access here either. Because the caller resolves this workflow
+# from this repository, the policy still has one source of truth -- this file.
+# Keep the logic below in sync with scripts/audit-workflows.sh, the local
+# checker used by audit.yml.
 #
 # Exceptions: this gate is strict and reads no exceptions file (it cannot see
-# one). A genuine, owner-approved exception is expressed by excluding the
-# repository in the ruleset's conditions, or by adding a bypass actor — both
-# are visible in the ruleset UI and in the org audit log.
+# one). An owner-approved exception means dropping the required status check on
+# that repository, and recording the reason and expiry in
+# runner-exceptions.json so the daily expiry check still surfaces it.
 #
-# Fail-closed note: this job requests self-hosted labels. A repository not yet
+# Fail-closed note: this job requests self-hosted labels. A repository not
 # added to the `public-node-b` runner group has no runner able to accept it, so
-# the check stays queued and the pull request cannot merge. That is intended —
+# the check stays queued and the pull request cannot merge. That is intended --
 # it forces runner-group membership to be configured rather than letting a
 # repository quietly fall back to GitHub-hosted runners.
 
-name: Runner policy
+name: Runner policy (reusable)
 
 on:
-  pull_request:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  workflow_call:
 
 permissions:
   contents: read

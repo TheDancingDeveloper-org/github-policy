@@ -13,18 +13,16 @@
 # Making this block a merge requires adding `runner-policy` as a required
 # status check on the calling repository's protected branch.
 #
-# The checker is inlined deliberately. This repository is private, so a calling
-# repository cannot fetch scripts/audit-workflows.sh from it: raw.github-
-# usercontent.com returns 404 unauthenticated, and the caller's GITHUB_TOKEN
-# has no read access here either. Because the caller resolves this workflow
-# from this repository, the policy still has one source of truth -- this file.
-# Keep the logic below in sync with scripts/audit-workflows.sh, the local
-# checker used by audit.yml.
+# The checker used to be inlined here, because a private policy repository
+# cannot be checked out by a public caller. This repository is public as of
+# 2026-08-17, so the caller checks it out and runs scripts/runner_policy.py
+# directly. That is now the only copy of the rule -- do not re-inline it.
 #
-# Exceptions: this gate is strict and reads no exceptions file (it cannot see
-# one). An owner-approved exception means dropping the required status check on
-# that repository, and recording the reason and expiry in
-# runner-exceptions.json so the daily expiry check still surfaces it.
+# Exceptions: this gate reads runner-exceptions.json out of the second
+# checkout, so an owner-approved exception no longer means dropping the
+# required status check on that repository. Entries are keyed by repo and
+# workflow file, optionally narrowed to named jobs, and an expired entry fails
+# the gate rather than suppressing anything.
 #
 # Fail-closed note: this job requests self-hosted labels. A repository not
 # added to the `public-node-b` runner group has no runner able to accept it, so
@@ -44,76 +42,20 @@ jobs:
   runner-policy:
     runs-on: [self-hosted, node-b, linux, x64]
     steps:
-      - uses: actions/checkout@v5
+      - name: Check out the calling repository
+        uses: actions/checkout@v5
+
+      - name: Check out the policy
+        uses: actions/checkout@v5
+        with:
+          repository: TheDancingDeveloper-org/github-policy
+          ref: main
+          path: .runner-policy
 
       - name: Audit runner selection
         shell: bash
         run: |
           set -euo pipefail
-          python3 - <<'PY'
-          import pathlib
-          import re
-          import sys
-
-          def indent(line: str) -> int:
-              return len(line) - len(line.lstrip(' '))
-
-          def values(lines: list[str], index: int) -> list[str]:
-              line = lines[index]
-              base = indent(line)
-              value = line.split(':', 1)[1].split('#', 1)[0].strip()
-              if value:
-                  return [p.strip().strip('"\'') for p in value.strip('[]').split(',') if p.strip()]
-              result = []
-              for child in lines[index + 1:]:
-                  stripped = child.strip()
-                  if not stripped or stripped.startswith('#'):
-                      continue
-                  if indent(child) <= base:
-                      break
-                  match = re.match(r'^-\s*([^#]+)', stripped)
-                  if match:
-                      result.append(match.group(1).strip().strip('"\''))
-              return result
-
-          # Assembled at runtime on purpose. A literal dollar-brace-brace in
-          # this file would be parsed as a GitHub Actions expression before the
-          # script ever runs, which breaks the whole workflow -- the first
-          # version of this file failed with an unresolvable workflow name for
-          # exactly that reason.
-          EXPR = '$' + '{' + '{'
-
-          failed = False
-          workflows = sorted(
-              p for pattern in ('.github/workflows/*.yml', '.github/workflows/*.yaml')
-              for p in pathlib.Path('.').glob(pattern)
-          )
-          if not workflows:
-              print('no workflows found; nothing to audit')
-
-          for path in workflows:
-              lines = path.read_text(encoding='utf-8').splitlines()
-              for number, line in enumerate(lines):
-                  if not re.match(r'^\s*runs-on\s*:', line, re.I):
-                      continue
-                  selected = values(lines, number)
-                  if not any(v.lower() == 'self-hosted' for v in selected):
-                      print(f'{path}:{number + 1}: runner selection is not explicitly '
-                            f'self-hosted -> {selected}', file=sys.stderr)
-                      failed = True
-                  if any(EXPR in v for v in selected):
-                      print(f'{path}:{number + 1}: dynamic runner selection requires '
-                            f'explicit review', file=sys.stderr)
-                      failed = True
-
-          if failed:
-              print('', file=sys.stderr)
-              print('Organization policy: every job must select a self-hosted runner '
-                    'explicitly, e.g.', file=sys.stderr)
-              print('  runs-on: [self-hosted, node-b, linux, x64]', file=sys.stderr)
-              print('  runs-on: [self-hosted, node-b, linux, x64, docker, publish]  '
-                    '# needs Docker', file=sys.stderr)
-              sys.exit(1)
-
-          print(f'ok: {len(workflows)} workflow file(s) audited, all self-hosted')
-          PY
+          python3 .runner-policy/scripts/runner_policy.py . \
+            --repo "${GITHUB_REPOSITORY##*/}" \
+            --exceptions .runner-policy/runner-exceptions.json

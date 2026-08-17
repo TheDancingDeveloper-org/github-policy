@@ -1,4 +1,25 @@
 {
   "schema_version": 1,
-  "exceptions": []
+  "exceptions": [
+    {
+      "repo": "cadastre",
+      "workflow": "ci.yaml",
+      "reason": "Public repository. This workflow triggers on pull_request, so it builds untrusted fork code; the self-hosted pool is persistent, runs as root and sits on the tailnet with reachable Forgejo, Infisical, Komodo and registry endpoints. Revisit once org fork-PR approval is 'all outside contributors' and the pool is ephemeral. publish.yml and the tag-gated release workflows are self-hosted.",
+      "expires_on": "2027-02-17"
+    },
+    {
+      "repo": "FarmEggs",
+      "workflow": "ci.yml",
+      "jobs": ["mobile"],
+      "reason": "flutter build apk --debug needs a JDK and the Android SDK. Neither is on any self-hosted runner and subosito/flutter-action does not install them; verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
+      "expires_on": "2026-11-17"
+    },
+    {
+      "repo": "FarmEggs",
+      "workflow": "ci.yml",
+      "jobs": ["web"],
+      "reason": "The browser suite and the M1a acceptance run need google-chrome at the path CHROME_EXECUTABLE/EGGS_WEB_CHROME pin, plus npm for playwright-core. Verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
+      "expires_on": "2026-11-17"
+    }
+  ]
 }

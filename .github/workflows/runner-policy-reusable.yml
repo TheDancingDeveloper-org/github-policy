@@ -26,6 +26,13 @@
 # that repository, and recording the reason and expiry in
 # runner-exceptions.json so the daily expiry check still surfaces it.
 #
+# Labels name capabilities, not locations (2026-08-19). `node-b` was being used
+# as a fleet selector, which left two of the five runners permanently idle
+# while the other three were busy and jobs queued behind them at a p90 of
+# 207s; `linux`/`x64` are advertised by every runner and selected nothing.
+# What this gate enforces is unchanged: the literal `self-hosted`, and no
+# dynamic `runs-on`.
+#
 # Fail-closed note: this job requests self-hosted labels. A repository not
 # added to the `public-node-b` runner group has no runner able to accept it, so
 # the check stays queued and the pull request cannot merge. That is intended --
@@ -42,7 +49,7 @@ permissions:
 
 jobs:
   runner-policy:
-    runs-on: [self-hosted, node-b, linux, x64]
+    runs-on: [self-hosted]
     steps:
       - uses: actions/checkout@v5
 
@@ -110,9 +117,9 @@ jobs:
               print('', file=sys.stderr)
               print('Organization policy: every job must select a self-hosted runner '
                     'explicitly, e.g.', file=sys.stderr)
-              print('  runs-on: [self-hosted, node-b, linux, x64]', file=sys.stderr)
-              print('  runs-on: [self-hosted, node-b, linux, x64, docker, publish]  '
-                    '# needs Docker', file=sys.stderr)
+              print('  runs-on: [self-hosted]           # any runner', file=sys.stderr)
+              print('  runs-on: [self-hosted, publish]  # needs Docker', file=sys.stderr)
+              print('  runs-on: [self-hosted, tailnet]  # needs Tailnet', file=sys.stderr)
               sys.exit(1)
 
           print(f'ok: {len(workflows)} workflow file(s) audited, all self-hosted')

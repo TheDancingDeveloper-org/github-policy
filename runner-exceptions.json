@@ -4,20 +4,30 @@
     {
       "repo": "cadastre",
       "workflow": "ci.yaml",
-      "reason": "Public repository. This workflow triggers on pull_request, so it builds untrusted fork code; the self-hosted pool is persistent, runs as root and sits on the tailnet with reachable Forgejo, Infisical, Komodo and registry endpoints. Revisit once org fork-PR approval is 'all outside contributors' and the pool is ephemeral. publish.yml and the tag-gated release workflows are self-hosted.",
+      "reason": "Public repository, and this repository enforces a stricter rule than the org's in its own test suite: tests/test_release_workflow.py pins SELF_HOSTED_WORKFLOWS to the two tag-gated release workflows and asserts every other job is NOT self-hosted, because pull_request builds untrusted fork code and the self-hosted pool is persistent, runs as root and sits on the tailnet. Moving ci.yaml or publish.yml would require weakening that test. Revisit only alongside ephemeral runners and fork-PR approval set to all outside contributors.",
+      "expires_on": "2027-02-17"
+    },
+    {
+      "repo": "cadastre",
+      "workflow": "publish.yml",
+      "reason": "Same tested invariant as cadastre/ci.yaml. publish.yml triggers on push to main, so it has no fork exposure, but test_self_hosted_workflows_are_all_tag_gated additionally requires that anything self-hosted be reachable only from refs/tags/v*. The tag-gated release-images.yml and release-pypi.yml are self-hosted and stay that way.",
       "expires_on": "2027-02-17"
     },
     {
       "repo": "FarmEggs",
       "workflow": "ci.yml",
-      "jobs": ["mobile"],
+      "jobs": [
+        "mobile"
+      ],
       "reason": "flutter build apk --debug needs a JDK and the Android SDK. Neither is on any self-hosted runner and subosito/flutter-action does not install them; verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
       "expires_on": "2026-11-17"
     },
     {
       "repo": "FarmEggs",
       "workflow": "ci.yml",
-      "jobs": ["web"],
+      "jobs": [
+        "web"
+      ],
       "reason": "The browser suite and the M1a acceptance run need google-chrome at the path CHROME_EXECUTABLE/EGGS_WEB_CHROME pin, plus npm for playwright-core. Verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
       "expires_on": "2026-11-17"
     }

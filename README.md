@@ -8,6 +8,9 @@ This repository is the source of truth for organization-wide CI policy.
 - Workflow and policy changes require owner review through `CODEOWNERS`.
 - `scripts/audit-workflows.sh` is the shared checker used by both workflows
   below.
+- `ghcr-retention-policy.json`, `scripts/ghcr_retention.py`, and the reusable
+  GHCR workflow are the single organization-wide package retention
+  implementation. Repository workflows declare package names only.
 
 ## How enforcement actually works
 

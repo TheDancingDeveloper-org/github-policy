@@ -1,0 +1,45 @@
+name: GHCR retention (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      apply:
+        type: boolean
+        default: false
+        required: false
+      packages:
+        type: string
+        default: ""
+        required: false
+    secrets:
+      GHCR_TOKEN:
+        required: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  retention:
+    runs-on: [self-hosted, publish]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: TheDancingDeveloper-org/github-policy
+          path: .github-policy
+      - name: Generate GHCR retention report
+        env:
+          GH_TOKEN: ${{ secrets.GHCR_TOKEN }}
+        run: |
+          args=(--output ghcr-retention-report.json)
+          if [[ -n "${{ inputs.packages }}" ]]; then
+            IFS=',' read -ra package_list <<< "${{ inputs.packages }}"
+            for package in "${package_list[@]}"; do args+=(--package "$package"); done
+          fi
+          if [[ "${{ inputs.apply }}" == "true" ]]; then args+=(--apply); fi
+          python3 .github-policy/scripts/ghcr_retention.py "${args[@]}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ghcr-retention-${{ github.repository }}-${{ github.run_id }}
+          path: ghcr-retention-report.json

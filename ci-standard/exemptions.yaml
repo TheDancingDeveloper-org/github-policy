@@ -61,6 +61,36 @@ exemptions:
     owner: thedancingdeveloper
     created: 2026-11-02
     expires: 2026-11-17
+  - repo: github-policy
+    rule: CI-05
+    workflow: runner-policy-reusable.yml
+    reason: >-
+      The legacy runner-policy gate requests bare [self-hosted] in every
+      caller's context; relabelling it changes runner selection for all
+      legacy callers at once. It is deleted when the last caller moves to
+      policy.yml (README "Rollout", phase 3).
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-04-30
+  - repo: github-policy
+    rule: CI-15
+    reason: >-
+      This repository is the policy: ci-auditor.yml runs the checker from its
+      own source on every PR, which is stricter than calling a pinned release
+      of itself. Revisit if the self-check is ever removed.
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-04-30
+  - repo: github-policy
+    rule: CI-21
+    reason: >-
+      The only tag build here is the ci-auditor image, and ci-auditor.yml
+      builds that same image (push off) in every merge-queue run, so a tag is
+      never its first build. CI-21 recognises dry runs by name and cannot see
+      that; drop this if a separate release build is ever added.
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-04-30
   - repo: graft
     rule: CI-10
     reason: >-

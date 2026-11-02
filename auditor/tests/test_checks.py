@@ -424,3 +424,20 @@ def test_policy_ref_must_repeat_uses(std: Standard) -> None:
     drift = GOOD.replace("with: {ref: v1.0.0}", "with: {ref: v0.9.0}")
     status, msgs = run(std, "CI-15", snap(("ci.yml", drift)))
     assert status == "fail" and "must repeat" in msgs[0]
+
+
+def test_reusable_runs_on_input_default(std: Standard) -> None:
+    wf = """
+    on:
+      workflow_call:
+        inputs:
+          runs-on: {type: string, default: '["self-hosted", "rust-heavy"]'}
+    jobs:
+      r:
+        runs-on: ${{ fromJSON(inputs.runs-on) }}
+        timeout-minutes: 30
+        steps: [{run: cargo test}]
+    """
+    assert run(std, "CI-05", snap(("rust-ci.yml", wf)))[0] == "pass"
+    bare = wf.replace('["self-hosted", "rust-heavy"]', '["self-hosted"]')
+    assert run(std, "CI-05", snap(("rust-ci.yml", bare)))[0] == "fail"

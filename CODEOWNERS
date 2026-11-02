@@ -2,3 +2,5 @@
 /CODEOWNERS @TheDancingDeveloper-org/owners
 /runner-exceptions.json @TheDancingDeveloper-org/owners
 /scripts/ @TheDancingDeveloper-org/owners
+/ci-standard/ @TheDancingDeveloper-org/owners
+/auditor/ @TheDancingDeveloper-org/owners

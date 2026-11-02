@@ -53,7 +53,8 @@ def _done(
 ) -> Outcome:
     if not applicable:
         return Outcome("na", note=note)
-    findings = [Finding(repo=snap.repo, rule=rule, message=m, workflow=w, job=j) for m, w, j in found]
+    unique = dict.fromkeys(found)  # one finding per (message, workflow, job)
+    findings = [Finding(repo=snap.repo, rule=rule, message=m, workflow=w, job=j) for m, w, j in unique]
     return Outcome("fail" if findings else "pass", findings, note)
 
 
@@ -359,6 +360,16 @@ def policy_gate_adopted(snap: Snapshot, std: Standard, rule: str) -> Outcome:
         ref = (job.uses or "").split("@", 1)[1]
         if not (SEMVER_TAG.match(ref) or SHA.match(ref)):
             found.append((f"policy.yml pinned to `{ref}`, not a tag or SHA", job.workflow.file, job.key))
+        with_ = job.body.get("with")
+        given = with_.get("ref") if isinstance(with_, dict) else None
+        if given != ref:
+            found.append(
+                (
+                    f"policy.yml `with: ref` is {given!r}, must repeat the uses ref `{ref}`",
+                    job.workflow.file,
+                    job.key,
+                )
+            )
     return _done(snap, rule, found, applicable=bool(snap.workflows))
 
 

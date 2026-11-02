@@ -1,0 +1,14 @@
+# actionlint config for the CI guardrails (WI-3087): the custom labels of
+# the runner classes in rules.yaml, so actionlint's runner-label check
+# accepts them. The policy gate and the auditor both pass this file with
+# -config-file. auditor/tests keep it in sync with rules.yaml.
+self-hosted-runner:
+  labels:
+    - bigmem
+    - ci-small
+    - docker
+    - graft-dev
+    - publish
+    - rust-heavy
+    - tailnet
+    - windows

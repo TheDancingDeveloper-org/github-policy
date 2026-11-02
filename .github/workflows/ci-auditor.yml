@@ -1,0 +1,102 @@
+# This repository's own checks for the CI guardrails (WI-3087), and the
+# ci-auditor image on tags.
+#
+# Public repository: the light jobs run on GitHub-hosted ubuntu-24.04
+# (operator, 2026-11-02). The image push uses only GITHUB_TOKEN
+# (packages: write) and runs on tags only (rule CI-06).
+
+name: CI guardrails
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
+
+permissions:
+  contents: read
+
+jobs:
+  auditor:
+    name: auditor
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: auditor
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          enable-cache: true
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy
+      - run: uv run pytest -q
+      - name: Standard and exemptions are valid
+        run: uv run ci-auditor validate --fail-expired
+
+  policy:
+    name: policy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+      - name: actionlint
+        run: |
+          set -euo pipefail
+          v=1.7.7; sum=023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+          curl -fsSL -o "$RUNNER_TEMP/al.tgz" "https://github.com/rhysd/actionlint/releases/download/v$v/actionlint_${v}_linux_amd64.tar.gz"
+          echo "$sum  $RUNNER_TEMP/al.tgz" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/al.tgz" -C "$RUNNER_TEMP" actionlint
+          "$RUNNER_TEMP/actionlint" -config-file ci-standard/actionlint.yaml
+      - name: Lint this repository against the standard (dogfood, report only)
+        run: uv run --project auditor ci-auditor lint . --repo github-policy --no-private --format github
+
+  image:
+    name: image
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [auditor, policy]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+      - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+      - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: .
+          file: auditor/Dockerfile
+          push: true
+          tags: ghcr.io/thedancingdeveloper-org/ci-auditor:${{ github.ref_name }}
+          provenance: false
+
+  ci:
+    name: ci
+    if: always()
+    needs: [auditor, policy]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Gate
+        env:
+          RESULTS: ${{ toJSON(needs.*.result) }}
+        run: |
+          echo "$RESULTS"
+          if echo "$RESULTS" | grep -qE '"(failure|cancelled)"'; then exit 1; fi

@@ -44,8 +44,9 @@ class Auditor:
     exemptions_repo: str
     exemptions_ref: str
     run_days: int = 7
-    max_runs: int = 40
+    max_runs: int = 20
     actionlint: str | None = None
+    actionlint_config: Path | None = None
     include_archived: bool = False
     repos: list[RepoRef] = field(default_factory=list)
     snapshots: list[Snapshot] = field(default_factory=list)
@@ -77,8 +78,9 @@ class Auditor:
             exemptions_repo=env("EXEMPTIONS_REPO", "TheDancingDeveloper-org/github-policy"),
             exemptions_ref=env("EXEMPTIONS_REF", "main"),
             run_days=int(env("RUN_DAYS", "7")),
-            max_runs=int(env("MAX_RUNS_PER_REPO", "40")),
+            max_runs=int(env("MAX_RUNS_PER_REPO", "20")),
             actionlint=env("ACTIONLINT") or None,
+            actionlint_config=std_dir / "actionlint.yaml",
             include_archived=env("INCLUDE_ARCHIVED") == "1",
         )
 
@@ -116,6 +118,7 @@ class Auditor:
                     run_days=self.run_days,
                     max_runs=self.max_runs,
                     actionlint=self.actionlint,
+                    actionlint_config=self.actionlint_config,
                 )
                 snapshots.append(snap)
                 results += evaluate(snap, self.std, self.exemptions, today)

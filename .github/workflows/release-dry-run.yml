@@ -1,0 +1,77 @@
+# Reusable release dry-run gate (WI-3087, rules CI-21/CI-22).
+#
+# A dry run is the SAME release build with publishing off, not a parallel
+# copy. The caller passes its own reusable release build workflow, which
+# must accept `publish: boolean`; this wrapper adds the preflight checks a
+# tag would otherwise find first:
+#   - the tag a release would cut matches the workspace version;
+#   - the build workflow file is valid (actionlint ran in policy.yml).
+#
+# Caller (templates/release-dry-run-stub.yml):
+#   on:
+#     schedule: [{cron: "17 3 * * *"}]
+#     pull_request: {paths: [".github/workflows/release*.yml", "packaging/**", "Dockerfile*", "scripts/release/**"]}
+#     workflow_dispatch:
+#   jobs:
+#     preflight:
+#       uses: TheDancingDeveloper-org/github-policy/.github/workflows/release-dry-run.yml@v1.0.0
+#     build:
+#       needs: preflight
+#       uses: ./.github/workflows/release-build.yml
+#       with: {publish: false}
+#
+# GitHub cannot call a reusable workflow named by an input, so the build is
+# a sibling job in the caller rather than a call made from here.
+
+name: Release dry run preflight (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        type: string
+        default: '"ci-small"'
+      version-file:
+        description: File holding the release version (Cargo.toml, pyproject.toml, package.json).
+        type: string
+        default: Cargo.toml
+    outputs:
+      version:
+        value: ${{ jobs.preflight.outputs.version }}
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    name: preflight
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Version the next tag would carry
+        id: version
+        shell: bash
+        env:
+          FILE: ${{ inputs.version-file }}
+        run: |
+          set -euo pipefail
+          case "$FILE" in
+            *Cargo.toml|*pyproject.toml)
+              version=$(python3 -c "import sys,tomllib; d=tomllib.load(open(sys.argv[1],'rb')); print((d.get('workspace',{}).get('package') or d.get('package') or d.get('project') or {}).get('version',''))" "$FILE") ;;
+            *package.json)
+              version=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get('version',''))" "$FILE") ;;
+            *) echo "unsupported version file $FILE" >&2; exit 1 ;;
+          esac
+          if [ -z "$version" ]; then echo "::error::no version in $FILE"; exit 1; fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          latest=$(git tag --list 'v*' --sort=-v:refname | head -1)
+          echo "next release v$version (latest tag ${latest:-none})" >> "$GITHUB_STEP_SUMMARY"
+          if [ "v$version" = "$latest" ] && [ "$(git rev-list -n1 "$latest")" != "$(git rev-parse HEAD)" ]; then
+            echo "::warning::v$version is already tagged at another commit: bump the version before the next tag"
+          fi

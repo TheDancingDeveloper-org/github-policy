@@ -173,3 +173,14 @@ def test_lint_cli_report_vs_enforce(tmp_path: Path, capsys: pytest.CaptureFixtur
     assert "::warning file=.github/workflows/ci.yml,title=CI-05" in out
     assert main([*base, "--enforce"]) == 1
     assert "::error file=.github/workflows/ci.yml,title=CI-05" in capsys.readouterr().out
+
+
+def test_actionlint_config_lists_every_class_label() -> None:
+    import yaml
+
+    std, _ = load(STD_DIR)
+    custom = {label for c in std.classes if not c.public_only for form in c.forms for label in form} - {
+        "self-hosted"
+    }
+    config = yaml.safe_load((STD_DIR / "actionlint.yaml").read_text())
+    assert set(config["self-hosted-runner"]["labels"]) == custom

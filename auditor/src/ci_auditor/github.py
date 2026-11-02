@@ -126,6 +126,7 @@ class RepoRef:
     private: bool
     archived: bool
     default_branch: str
+    pushed_at: str = ""
 
 
 def list_repos(gh: GitHub, org: str, extra: list[str]) -> list[RepoRef]:
@@ -141,6 +142,7 @@ def list_repos(gh: GitHub, org: str, extra: list[str]) -> list[RepoRef]:
             private=bool(r["private"]),
             archived=bool(r["archived"]),
             default_branch=str(r.get("default_branch") or "main"),
+            pushed_at=str(r.get("pushed_at") or ""),
         )
         for r in raw
     ]
@@ -191,6 +193,11 @@ def _branch_rules(gh: GitHub, ref: RepoRef, snap: Snapshot) -> None:
 
 
 def _runtime(gh: GitHub, ref: RepoRef, snap: Snapshot, days: int, max_runs: int) -> None:
+    if ref.pushed_at and datetime.fromisoformat(ref.pushed_at.replace("Z", "+00:00")).timestamp() < (
+        time.time() - days * 86400
+    ):
+        snap.runtime_runs, snap.runtime_jobs = [], []  # no push in the window: nothing ran worth reading
+        return
     since = datetime.fromtimestamp(time.time() - days * 86400, UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
     body = gh.get(
         f"/repos/{ref.full_name}/actions/runs?per_page=100&created=%3E%3D{since}", "runs", optional=True
@@ -234,7 +241,7 @@ def _runtime(gh: GitHub, ref: RepoRef, snap: Snapshot, days: int, max_runs: int)
     snap.runtime_jobs = jobs
 
 
-def run_actionlint(snap: Snapshot, binary: str | None) -> None:
+def run_actionlint(snap: Snapshot, binary: str | None, config: Path | None = None) -> None:
     exe = binary or shutil.which("actionlint")
     if not exe or not snap.workflows:
         return
@@ -243,8 +250,19 @@ def run_actionlint(snap: Snapshot, binary: str | None) -> None:
         wdir.mkdir(parents=True)
         for wf in snap.workflows:
             (wdir / wf.file).write_text(wf.text, encoding="utf-8")
+        subprocess.run(["git", "init", "-q", tmp], check=False, capture_output=True)
+        extra = ["-config-file", str(config)] if config is not None and config.exists() else []
         proc = subprocess.run(
-            [exe, "-shellcheck=", "-pyflakes=", "-no-color", "-oneline"],
+            [
+                exe,
+                "-shellcheck=",
+                "-pyflakes=",
+                "-no-color",
+                "-oneline",
+                "-ignore",
+                'label ".+" is unknown',
+                *extra,
+            ],
             cwd=tmp,
             capture_output=True,
             text=True,
@@ -254,7 +272,8 @@ def run_actionlint(snap: Snapshot, binary: str | None) -> None:
     if proc.returncode not in (0, 1):
         snap.gaps.append("actionlint")
         return
-    snap.actionlint = [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+    # Runner labels are CI-05's job; actionlint's own label check is ignored above.
+    snap.actionlint = [line.strip()[:300] for line in proc.stdout.splitlines() if line.strip()]
 
 
 def collect(
@@ -263,8 +282,9 @@ def collect(
     org_visibility: dict[str, bool],
     *,
     run_days: int = 7,
-    max_runs: int = 40,
+    max_runs: int = 20,
     actionlint: str | None = None,
+    actionlint_config: Path | None = None,
 ) -> Snapshot:
     snap = Snapshot(
         repo=ref.repo,
@@ -284,7 +304,7 @@ def collect(
         except GitHubError as err:
             snap.gaps.append("api")
             print(json.dumps({"msg": "ci_audit_error", "repo": ref.repo, "error": str(err)}), file=sys.stderr)
-    run_actionlint(snap, actionlint)
+    run_actionlint(snap, actionlint, actionlint_config)
     return snap
 
 

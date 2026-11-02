@@ -1,0 +1,148 @@
+# Reusable CI guardrails policy gate (WI-3087). Replaces the three
+# migration-policy.sh copies, the runner-policy stub and vogt's inlined
+# checks with one versioned workflow.
+#
+# Call it from the repository's CI workflow and let the `ci` gate need it
+# (templates/policy-stub.yml), pinned to a release tag of this repository:
+#
+#   policy:
+#     uses: TheDancingDeveloper-org/github-policy/.github/workflows/policy.yml@v1.0.0
+#     with: {ref: v1.0.0}
+#
+# It runs, in the caller's context:
+#   1. actionlint (pinned, checksum-verified) with ci-standard/actionlint.yaml;
+#   2. `ci-auditor lint`: the static rules of ci-standard/rules.yaml (runner
+#      classes, timeouts, concurrency, no job-level continue-on-error, trigger
+#      matrix, pinned actions, cache, private deps, CodeQL), minus the live
+#      exemptions read from this repository's main;
+#   3. the identity check: commit author and committer, tracked paths and
+#      content. Never commit message bodies (rules CI-16).
+#
+# Report-only by default: findings are warnings and the job passes. Set
+# `enforce: true` once the repository is clean (README "Rollout") and
+# findings of `enforce: block` rules fail the job.
+#
+# `ref` must repeat the tag in `uses:` (a reusable workflow cannot learn its
+# own ref; rule CI-15 checks the two match, so a Dependabot bump of `uses:`
+# alone shows as a finding). The rules come from that ref; only
+# exemptions.yaml comes from main, so a merged exemption applies at once.
+
+name: Policy (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: The github-policy tag or SHA in this call's `uses:` (repeat it).
+        type: string
+        required: true
+      enforce:
+        description: Fail on findings of `enforce block` rules (default report only).
+        type: boolean
+        default: false
+      runs-on:
+        description: JSON runs-on for the policy job. A runner class from rules.yaml.
+        type: string
+        default: '"ci-small"'
+      identity:
+        description: Run the identity check (author, committer, paths, content).
+        type: boolean
+        default: true
+      identity-content:
+        description: Also scan tracked file content for forbidden identifiers.
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    name: policy
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    timeout-minutes: 10
+    env:
+      ACTIONLINT_VERSION: 1.7.7
+      ACTIONLINT_SHA256: 023070a287cd8cccd71515fedc843f1985bf96c436b7effaecce67290e7e0757
+    steps:
+      - name: Check out the calling repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Check out the policy at the pinned ref
+        uses: actions/checkout@v5
+        with:
+          repository: TheDancingDeveloper-org/github-policy
+          ref: ${{ inputs.ref }}
+          path: .ci-policy
+
+      - name: Check out live exemptions (main)
+        uses: actions/checkout@v5
+        with:
+          repository: TheDancingDeveloper-org/github-policy
+          ref: main
+          path: .ci-policy-live
+          sparse-checkout: ci-standard/exemptions.yaml
+          sparse-checkout-cone-mode: false
+
+      - name: Install ci-auditor and actionlint
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/cip"
+          "$RUNNER_TEMP/cip/bin/pip" install --quiet --require-hashes --no-deps -r .ci-policy/auditor/requirements.lock
+          # ci-auditor runs from source (no build backend to fetch), in isolated
+          # mode so nothing in the caller's checkout can shadow an import.
+          src="$GITHUB_WORKSPACE/.ci-policy/auditor/src"
+          cat > "$RUNNER_TEMP/cip/bin/ci-auditor" <<EOF
+          #!/bin/sh
+          exec "$RUNNER_TEMP/cip/bin/python" -I -c "import sys; sys.path.insert(0, '$src'); from ci_auditor.__main__ import main; sys.exit(main())" "\$@"
+          EOF
+          chmod +x "$RUNNER_TEMP/cip/bin/ci-auditor"
+          tarball="actionlint_${ACTIONLINT_VERSION}_linux_amd64.tar.gz"
+          curl -fsSL -o "$RUNNER_TEMP/$tarball" \
+            "https://github.com/rhysd/actionlint/releases/download/v${ACTIONLINT_VERSION}/$tarball"
+          echo "${ACTIONLINT_SHA256}  $RUNNER_TEMP/$tarball" | sha256sum -c -
+          tar -xzf "$RUNNER_TEMP/$tarball" -C "$RUNNER_TEMP" actionlint
+          echo "$RUNNER_TEMP/cip/bin" >> "$GITHUB_PATH"
+
+      - name: Workflow rules (ci-auditor lint, includes actionlint)
+        shell: bash
+        env:
+          REPO: ${{ github.event.repository.name }}
+          PRIVATE: ${{ github.event.repository.private }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          ENFORCE: ${{ inputs.enforce }}
+        run: |
+          set -euo pipefail
+          args=(lint . --repo "$REPO" --default-branch "${DEFAULT_BRANCH:-main}"
+                --standard .ci-policy/ci-standard
+                --exemptions .ci-policy-live/ci-standard/exemptions.yaml
+                --actionlint "$RUNNER_TEMP/actionlint" --format github)
+          if [ "$PRIVATE" = "false" ]; then args+=(--no-private); fi
+          if [ "$ENFORCE" = "true" ]; then args+=(--enforce); fi
+          ci-auditor "${args[@]}"
+
+      - name: Identity (author, committer, paths, content - never bodies)
+        if: inputs.identity
+        shell: bash
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          MG_BASE: ${{ github.event.merge_group.base_sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          ENFORCE: ${{ inputs.enforce }}
+          CONTENT: ${{ inputs.identity-content }}
+        run: |
+          set -euo pipefail
+          case "$EVENT" in
+            pull_request|pull_request_target) base="$PR_BASE" ;;
+            merge_group) base="$MG_BASE" ;;
+            push) base="$PUSH_BEFORE" ;;
+            *) base="" ;;
+          esac
+          args=(identity . --base "$base" --head HEAD)
+          if [ "$CONTENT" != "true" ]; then args+=(--no-content); fi
+          if [ "$ENFORCE" = "true" ]; then args+=(--enforce); fi
+          ci-auditor "${args[@]}"

@@ -8,8 +8,11 @@ name: Runner policy
 
 on:
   pull_request:
-  push:
-    branches: [main]
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
 
 jobs:
   runner-policy:

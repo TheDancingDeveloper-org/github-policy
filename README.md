@@ -2,6 +2,13 @@
 
 This repository is the source of truth for organization-wide CI policy.
 
+**CI guardrails (WI-3087):** the CI standard as code is in
+[`ci-standard/`](ci-standard/README.md). It holds the rules, exemptions, the
+reusable `policy.yml`, `rust-ci.yml`, `image.yml` and `release-dry-run.yml`, and
+the `ci-auditor` that audits every repository and feeds Grafana. New
+repositories call `policy.yml`; the `runner-policy` gate below is the legacy
+path, kept until its callers move.
+
 - GitHub Actions jobs use approved self-hosted runner labels by default.
 - Public-hosted runners require an owner-approved, time-bounded exception in
   `runner-exceptions.json`.

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from collections.abc import Iterator
 from dataclasses import dataclass
@@ -13,6 +14,7 @@ from .model import RunnerClass, Workflow
 
 EXPR = re.compile(r"\$\{\{\s*(.*?)\s*\}\}")
 MATRIX_REF = re.compile(r"^\$\{\{\s*matrix\.([A-Za-z0-9_-]+)\s*\}\}$")
+INPUT_JSON_REF = re.compile(r"^\$\{\{\s*fromJSON\(\s*inputs\.([A-Za-z0-9_-]+)\s*\)\s*\}\}$")
 PR_EVENTS = ("pull_request", "pull_request_target")
 
 
@@ -139,6 +141,9 @@ def runs_on_sets(job: Job) -> list[frozenset[str]] | None:
         match = MATRIX_REF.match(raw.strip())
         if match:
             return _matrix_values(job, match.group(1))
+        match = INPUT_JSON_REF.match(raw.strip())
+        if match:
+            return _input_default(job, match.group(1))
         if EXPR.search(raw):
             return None
         return [frozenset([raw])]
@@ -147,6 +152,26 @@ def runs_on_sets(job: Job) -> list[frozenset[str]] | None:
         if any(EXPR.search(x) for x in labels):
             return None
         return [frozenset(labels)]
+    return None
+
+
+def _input_default(job: Job, name: str) -> list[frozenset[str]] | None:
+    """A reusable workflow's `runs-on: ${{ fromJSON(inputs.x) }}` is judged by
+    the input's default; what callers pass is seen at runtime (CI-07)."""
+    call = triggers(job.workflow).get("workflow_call")
+    inputs = call.get("inputs") if isinstance(call, dict) else None
+    spec = inputs.get(name) if isinstance(inputs, dict) else None
+    default = spec.get("default") if isinstance(spec, dict) else None
+    if not isinstance(default, str):
+        return None
+    try:
+        value = json.loads(default)
+    except ValueError:
+        return None
+    if isinstance(value, str):
+        return [frozenset([value])]
+    if isinstance(value, list) and all(isinstance(x, str) for x in value):
+        return [frozenset(value)]
     return None
 
 

@@ -14,8 +14,7 @@ name: Policy repository self-audit
 
 on:
   pull_request:
-  push:
-    branches: [main]
+  merge_group:
   schedule:
     - cron: "23 3 * * *"
   workflow_dispatch:
@@ -23,9 +22,14 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
+
 jobs:
   audit:
-    runs-on: [self-hosted]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
       - name: Checker tests

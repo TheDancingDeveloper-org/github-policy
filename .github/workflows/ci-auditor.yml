@@ -63,8 +63,10 @@ jobs:
         run: uv run --project auditor ci-auditor lint . --repo github-policy --no-private --format github
 
   image:
+    # Built in the merge queue too (push off), so a tag is never the image's
+    # first build (rule CI-21); pushed on tags only (rule CI-06).
     name: image
-    if: startsWith(github.ref, 'refs/tags/v')
+    if: github.event_name != 'pull_request'
     needs: [auditor, policy]
     runs-on: ubuntu-24.04
     timeout-minutes: 20
@@ -79,18 +81,19 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ github.token }}
+        if: startsWith(github.ref, 'refs/tags/v')
       - uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
         with:
           context: .
           file: auditor/Dockerfile
-          push: true
-          tags: ghcr.io/thedancingdeveloper-org/ci-auditor:${{ github.ref_name }}
+          push: ${{ startsWith(github.ref, 'refs/tags/v') }}
+          tags: ghcr.io/thedancingdeveloper-org/ci-auditor:${{ startsWith(github.ref, 'refs/tags/v') && github.ref_name || 'ci' }}
           provenance: false
 
   ci:
     name: ci
     if: always()
-    needs: [auditor, policy]
+    needs: [auditor, policy, image]
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:

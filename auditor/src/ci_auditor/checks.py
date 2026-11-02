@@ -422,7 +422,7 @@ def _main_only(value: object) -> bool:
     if value is False or value == "false":
         return True
     v = str(value).replace('"', "'")
-    return bool(re.search(r"refs/heads/main|ref_name\s*==\s*'main'|event_name\s*==\s*'(push|schedule)'", v))
+    return bool(re.search(r"refs/heads/|ref_name\s*==\s*'main'|event_name\s*==\s*'(push|schedule)'", v))
 
 
 def cache_rust_save_main_only(snap: Snapshot, std: Standard, rule: str) -> Outcome:
@@ -482,6 +482,8 @@ def _releases(snap: Snapshot) -> bool:
 def _dry_runs(snap: Snapshot) -> list[str]:
     out = []
     for wf in snap.workflows:
+        if set(wfm.triggers(wf)) <= {"workflow_call"}:
+            continue  # a reusable building block, not a repository's dry run
         label = f"{wf.file} {wf.doc.get('name', '')}".lower().replace("_", "-")
         if "dry-run" in label or "dry run" in label or "dryrun" in label:
             out.append(wf.file)

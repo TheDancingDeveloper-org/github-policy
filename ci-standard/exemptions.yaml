@@ -17,6 +17,738 @@
 # Schema: exemptions.schema.json. Keep entries sorted by repo, then rule.
 version: 1
 exemptions:
+  - repo: agent-harness
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: agent-harness
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: agent-harness
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: agent-harness
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: agent-harness
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: agent-harness
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: agent-harness
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-01
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aidevenv
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-01
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-corpus
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-06
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-diskwarden
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-download
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-import
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-media
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-metadata
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-models
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-parser
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-quality
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: arr-schema
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-07
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cart-mcp
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-07
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-cartwatch
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: aus-price-scanner
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
   - repo: cadastre
     rule: CI-05
     workflow: ci.yaml
@@ -39,6 +771,282 @@ exemptions:
     owner: thedancingdeveloper
     created: 2026-11-02
     expires: 2027-02-17
+  - repo: cadastre
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-07
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cadastre
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cdr-dh-cts
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cdr-dh-cts
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cdr-dh-cts
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cdr-dh-cts
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cdr-dh-cts
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: cdr-dh-cts
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-13
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-17
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-20
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: codex
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-06
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: contextkeeper
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: deskd
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: egressy-web
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: egressy-web
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: egressy-web
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: egressy-web
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: egressy-web
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: egressy-web
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
   - repo: FarmEggs
     rule: CI-05
     workflow: ci.yml
@@ -61,6 +1069,54 @@ exemptions:
     owner: thedancingdeveloper
     created: 2026-11-02
     expires: 2026-11-17
+  - repo: fluent2-egui
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-07
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-13
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: fluent2-egui
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
   - repo: github-policy
     rule: CI-05
     workflow: runner-policy-reusable.yml
@@ -100,3 +1156,1773 @@ exemptions:
     owner: oversight
     created: 2026-11-02
     expires: 2026-11-16
+  - repo: komodo
+    rule: CI-01
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-07
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: komodo
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-bencode
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-buffers
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-clone-to-owned
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-core
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-dht
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-lsd
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-peer-protocol
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-sha1-wrapper
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-tracker-comms
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: librtbit-upnp-serve
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: msp-klaudia
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-01
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-07
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-17
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: newznab-tmux
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: NGMS
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-01
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-06
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nntp-client-bench
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-core
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-decode
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-dispatch
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-news
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-nntp
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-postproc
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzb-web
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: nzbdav-rs
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-01
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: openscion
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: pingRAG
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: pingRAG
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: pingRAG
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: pingRAG
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: pingRAG
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: pingRAG
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: Rust-PAR2
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-16
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: rust-yenc-simd
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-06
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: secscan
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: spot-github-runners
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: spot-github-runners
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: spot-github-runners
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: tfdrift
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: tfdrift
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: tfdrift
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: tfdrift
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: trolley
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: trolley
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: trolley
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: trolley
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: trolley
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: trolley
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-10
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-19
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: voicepipe
+    rule: CI-21
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-02
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-04
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-05
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-06
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-08
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-11
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-12
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-15
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31
+  - repo: wifimap-rs
+    rule: CI-18
+    reason: "small repo pending template adoption or archive (operator 2026-11-02)"
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-01-31

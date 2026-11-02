@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import subprocess
 from datetime import UTC, date, datetime
 from pathlib import Path
@@ -184,3 +185,22 @@ def test_actionlint_config_lists_every_class_label() -> None:
     }
     config = yaml.safe_load((STD_DIR / "actionlint.yaml").read_text())
     assert set(config["self-hosted-runner"]["labels"]) == custom
+
+
+@pytest.mark.skipif(shutil.which("actionlint") is None, reason="actionlint not installed")
+def test_run_actionlint_with_relative_config(monkeypatch: pytest.MonkeyPatch) -> None:
+    from ci_auditor import workflow as wfm
+    from ci_auditor.github import run_actionlint
+
+    monkeypatch.chdir(ROOT)
+    snap = Snapshot(repo="demo", full_name="o/demo", private=True)
+    snap.workflows.append(
+        wfm.parse(
+            "w.yml",
+            "on: push\njobs:\n  a:\n    runs-on: ci-small\n    steps:\n"
+            "      - run: echo ${{ github.nope }}\n",
+        )
+    )
+    run_actionlint(snap, None, Path("ci-standard/actionlint.yaml"))
+    assert snap.gaps == []
+    assert snap.actionlint and "nope" in snap.actionlint[0]

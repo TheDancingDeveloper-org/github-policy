@@ -251,7 +251,7 @@ def run_actionlint(snap: Snapshot, binary: str | None, config: Path | None = Non
         for wf in snap.workflows:
             (wdir / wf.file).write_text(wf.text, encoding="utf-8")
         subprocess.run(["git", "init", "-q", tmp], check=False, capture_output=True)
-        extra = ["-config-file", str(config)] if config is not None and config.exists() else []
+        extra = ["-config-file", str(config.resolve())] if config is not None and config.exists() else []
         proc = subprocess.run(
             [
                 exe,

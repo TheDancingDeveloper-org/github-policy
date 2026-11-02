@@ -52,7 +52,7 @@ def cmd_lint(args: argparse.Namespace) -> int:
     root = Path(args.root)
     snap = snapshot_from_checkout(root, args.repo or root.resolve().name, args.private, args.default_branch)
     if args.actionlint:
-        run_actionlint(snap, args.actionlint)
+        run_actionlint(snap, args.actionlint, std_dir / "actionlint.yaml")
     results = evaluate(snap, std, exemptions, date.fromisoformat(args.today), kinds=("static",))
     blocking = 0
     summary = [

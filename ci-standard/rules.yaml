@@ -64,7 +64,9 @@ runner_classes:
     use: light jobs (lint, unit tests, docs) in public repositories with no secrets and no tailnet. Pinned images, never -latest.
 
 # Required contexts a repository may make required on its default branch.
-required_contexts: [ci, policy]
+# `policy / policy` is the check name when policy.yml is called from its own
+# caller job; preferred is to call it from the CI workflow and let `ci` need it.
+required_contexts: [ci, policy, policy / policy]
 
 # Exemptions may not run longer than this from the day they are written.
 max_exemption_days: 180
@@ -333,7 +335,8 @@ rules:
     machine: >-
       Some job `uses:
       TheDancingDeveloper-org/github-policy/.github/workflows/policy.yml@<ref>`
-      where ref matches `v<semver>` or a 40-hex SHA (not a branch).
+      where ref matches `v<semver>` or a 40-hex SHA (not a branch), and its
+      `with: ref` input repeats that ref.
     fix: Copy `templates/policy-stub.yml` to `.github/workflows/policy.yml`.
     enforce: report
 

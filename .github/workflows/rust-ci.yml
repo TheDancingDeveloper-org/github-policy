@@ -1,0 +1,112 @@
+# Reusable Rust CI (WI-3087): fmt, clippy, nextest, optional cargo-deny.
+#
+# The caller's CI workflow calls it and the `ci` gate needs it:
+#
+#   rust:
+#     uses: TheDancingDeveloper-org/github-policy/.github/workflows/rust-ci.yml@v1.0.0
+#     with: {packages: "-p graft-core -p graft-server"}
+#
+# Cache (rule CI-19): Swatinem/rust-cache, shared key per job class, saved
+# only on the default branch. PR and merge-queue runs restore only; the
+# cache-warm path is a push-to-main or nightly call with `warm: true`.
+# The toolchain comes from the caller's rust-toolchain.toml (rustup reads it).
+# No apt, no `cargo install`: nextest and cargo-deny are prebuilt binaries.
+
+name: Rust CI (reusable)
+
+on:
+  workflow_call:
+    inputs:
+      runs-on:
+        description: JSON runs-on; a runner class from ci-standard/rules.yaml.
+        type: string
+        default: '["self-hosted", "rust-heavy"]'
+      packages:
+        description: cargo package selection (`-p a -p b`); empty means --workspace.
+        type: string
+        default: ""
+      features:
+        description: cargo feature flags, e.g. `--all-features`.
+        type: string
+        default: ""
+      nextest-profile:
+        description: nextest profile (`ci` in the PR set, a retries profile in merge_group).
+        type: string
+        default: default
+      deny:
+        description: Run cargo-deny (bans, licences, advisories with the offline DB).
+        type: boolean
+        default: false
+      warm:
+        description: Cache-warm mode (push to main / nightly) - build tests without running them.
+        type: boolean
+        default: false
+      timeout-minutes:
+        type: number
+        default: 30
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: "0"
+  # If a caller sets RUSTC_WRAPPER=sccache, a dead cache server must not fail
+  # the build (rule CI-20).
+  SCCACHE_IGNORE_SERVER_IO_ERROR: "1"
+
+jobs:
+  rust:
+    name: rust
+    runs-on: ${{ fromJSON(inputs.runs-on) }}
+    timeout-minutes: ${{ inputs.timeout-minutes }}
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Toolchain (from rust-toolchain.toml)
+        shell: bash
+        run: |
+          rustup show active-toolchain || rustup toolchain install
+          rustup component add rustfmt clippy
+
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          shared-key: rust-ci
+          save-if: ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) }}
+          cache-on-failure: false
+
+      - uses: taiki-e/install-action@8cca0918f8471c33515202b73f56ab27f2bed283 # v2.87.29
+        with:
+          tool: cargo-nextest,cargo-deny
+
+      - name: fmt
+        if: ${{ !inputs.warm }}
+        run: cargo fmt --all --check
+
+      - name: clippy
+        env:
+          PKGS: ${{ inputs.packages }}
+          FEATURES: ${{ inputs.features }}
+        shell: bash
+        run: |
+          # shellcheck disable=SC2086 # word-splitting the package list is intended
+          cargo clippy ${PKGS:---workspace} $FEATURES --all-targets --locked -- -D warnings
+
+      - name: nextest
+        env:
+          PKGS: ${{ inputs.packages }}
+          FEATURES: ${{ inputs.features }}
+          PROFILE: ${{ inputs.nextest-profile }}
+          WARM: ${{ inputs.warm }}
+        shell: bash
+        run: |
+          # shellcheck disable=SC2086
+          if [ "$WARM" = "true" ]; then
+            cargo nextest run ${PKGS:---workspace} $FEATURES --locked --no-run
+          else
+            cargo nextest run ${PKGS:---workspace} $FEATURES --locked --profile "$PROFILE"
+          fi
+
+      - name: cargo-deny
+        if: ${{ inputs.deny && !inputs.warm }}
+        run: cargo deny --locked check --disable-fetch bans licenses advisories

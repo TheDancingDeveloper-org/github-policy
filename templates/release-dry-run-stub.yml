@@ -1,0 +1,31 @@
+# Template: release dry-run (rules CI-21, CI-22). The build job calls the
+# SAME reusable build the tag workflow calls, with publish off.
+name: Release dry run
+
+on:
+  schedule:
+    - cron: "17 3 * * *"
+  pull_request:
+    paths:
+      - ".github/workflows/release*.yml"
+      - "packaging/**"
+      - "Dockerfile*"
+      - "scripts/release/**"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    uses: TheDancingDeveloper-org/github-policy/.github/workflows/release-dry-run.yml@v1.0.0
+
+  build:
+    needs: preflight
+    uses: ./.github/workflows/release-build.yml
+    with:
+      publish: false

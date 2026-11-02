@@ -1,0 +1,23 @@
+# Template: the policy gate on its own, for a repository whose CI workflow
+# cannot take the `policy` job yet. Prefer adding the job to ci.yml and
+# letting `ci` need it (templates/ci-gate.yml). Its check is `policy / policy`.
+# Keep `uses:` and `with: ref` on the same tag (rule CI-15).
+name: Policy
+
+on:
+  pull_request:
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    uses: TheDancingDeveloper-org/github-policy/.github/workflows/policy.yml@v1.0.0
+    with:
+      ref: v1.0.0
+      # enforce: true   # phase 2, once the repository is clean (README "Rollout")

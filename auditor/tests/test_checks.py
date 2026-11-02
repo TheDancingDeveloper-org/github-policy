@@ -55,6 +55,7 @@ jobs:
       - run: echo gate
   policy:
     uses: TheDancingDeveloper-org/github-policy/.github/workflows/policy.yml@v1.0.0
+    with: {ref: v1.0.0}
 """
 
 
@@ -417,3 +418,9 @@ def test_exemption_suppresses_until_expiry(std: Standard) -> None:
     other_job = Exemption(**{**ex.__dict__, "job": "e2e"})
     scoped = {r.rule.id: r for r in evaluate(s, std, [other_job], date(2026, 11, 5), kinds=("static",))}
     assert scoped["CI-05"].status == "fail"
+
+
+def test_policy_ref_must_repeat_uses(std: Standard) -> None:
+    drift = GOOD.replace("with: {ref: v1.0.0}", "with: {ref: v0.9.0}")
+    status, msgs = run(std, "CI-15", snap(("ci.yml", drift)))
+    assert status == "fail" and "must repeat" in msgs[0]

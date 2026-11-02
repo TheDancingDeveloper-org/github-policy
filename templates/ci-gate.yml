@@ -1,0 +1,50 @@
+# Template: the standard CI workflow shape (ci-standard rules CI-01..CI-15).
+# Copy to .github/workflows/ci.yml and replace the `checks` job with the
+# repository's own jobs (or a call to rust-ci.yml). Make ONLY `ci` required.
+name: CI
+
+on:
+  pull_request:
+  merge_group:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'merge_group' }}
+
+permissions:
+  contents: read
+
+jobs:
+  policy:
+    uses: TheDancingDeveloper-org/github-policy/.github/workflows/policy.yml@v1.0.0
+    with:
+      ref: v1.0.0
+
+  rust:
+    uses: TheDancingDeveloper-org/github-policy/.github/workflows/rust-ci.yml@v1.0.0
+
+  e2e:
+    # Expensive suites run in the merge queue only (CI-04).
+    if: github.event_name == 'merge_group'
+    runs-on: [self-hosted, docker]
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - run: ./scripts/e2e.sh
+
+  ci:
+    # The one required context. Fails on any failed or cancelled need,
+    # accepts skipped (path-scoped or merge_group-only jobs).
+    name: ci
+    if: always()
+    needs: [policy, rust, e2e]
+    runs-on: ci-small
+    timeout-minutes: 5
+    steps:
+      - name: Gate
+        env:
+          RESULTS: ${{ toJSON(needs.*.result) }}
+        run: |
+          echo "$RESULTS"
+          if echo "$RESULTS" | grep -qE '"(failure|cancelled)"'; then exit 1; fi

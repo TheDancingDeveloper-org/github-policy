@@ -1,0 +1,487 @@
+# CI guardrails: the standard, as code (WI-3087).
+#
+# Every rule here is evaluated by the auditor (auditor/, the `ci-auditor`
+# exporter) for every org repository, and the `static` ones also by the
+# reusable `policy.yml` gate inside each repository. The rule IDs are stable:
+# exemptions, metrics, alerts and dashboards key on them. Never renumber; retire
+# a rule by setting `retired: true`.
+#
+# Fields:
+#   id         CI-NN, stable.
+#   area       grouping for the dashboard.
+#   title      short name (metric-safe text, shown in the matrix).
+#   statement  the rule, in one or two sentences.
+#   severity   high | medium | low.
+#   kind       static   - read from the workflow files alone (the policy gate can run it)
+#              settings - needs branch protection / rulesets (auditor only)
+#              runtime  - needs recent Actions runs (auditor only)
+#   check      the auditor function that evaluates it (auditor/src/ci_auditor/checks.py).
+#   machine    how the check decides, in words, so a reader can predict it.
+#   fix        what to change to pass.
+#   enforce    report | block. `block` rules fail the policy gate once a repo
+#              opts into enforcement (policy.yml `enforce: true`); `report`
+#              rules only ever show in the dashboard. See README "Rollout".
+#
+# Source: ~/Working/Active/ci-review-2026-11.md §3 and
+# .claude/rules/delivery-process.md "CI".
+
+version: 1
+
+# Capability classes for `runs-on`. A job's runs-on must equal one of a
+# class's `forms` exactly (order-insensitive). `self-hosted` alone is never a
+# class. `public_only` classes are GitHub-hosted and allowed only in public
+# repositories, for light jobs (operator, 2026-11-02). `repos` restricts a
+# class to the named repositories.
+runner_classes:
+  ci-small:
+    forms: [[ci-small]]
+    use: policy, fmt, lint, type-check, unit tests, changes and gate jobs, docs. No Docker, no tailnet, <= 8 GB.
+  rust-heavy:
+    forms: [[self-hosted, rust-heavy]]
+    use: cargo build, clippy and nextest on large workspaces.
+  docker:
+    forms: [[self-hosted, docker]]
+    use: compose e2e, container smoke, image builds without push.
+  bigmem:
+    forms: [[self-hosted, bigmem]]
+    use: CodeQL on tags, parity recordings, huge links. Nothing else.
+  publish:
+    forms: [[self-hosted, publish], [self-hosted, docker, publish]]
+    use: push to a registry, deploy, signing. Only on push to main, tags or dispatch (CI-06).
+  tailnet:
+    forms: [[self-hosted, tailnet]]
+    use: jobs that must reach estate hosts.
+  windows:
+    forms: [[self-hosted, windows]]
+    use: Windows builds and signing (rustTorrent).
+  graft-dev:
+    forms: [[self-hosted, graft-dev]]
+    repos: [graft]
+    use: graft attest and dev deploy, graft repo only.
+  hosted:
+    forms: [[ubuntu-24.04], [ubuntu-24.04-arm], [windows-2025], [macos-15]]
+    public_only: true
+    use: light jobs (lint, unit tests, docs) in public repositories with no secrets and no tailnet. Pinned images, never -latest.
+
+# Required contexts a repository may make required on its default branch.
+required_contexts: [ci, policy]
+
+# Exemptions may not run longer than this from the day they are written.
+max_exemption_days: 180
+
+rules:
+  # --- Trigger matrix ------------------------------------------------------
+  - id: CI-01
+    area: triggers
+    title: no branch-wide push CI
+    statement: >-
+      A workflow that runs on pull_request or merge_group does not also run on
+      push to any branch other than the default branch (no `push: ['**']`, no
+      unfiltered `push:`, no long-lived `dev`/`develop` branch).
+    severity: medium
+    kind: static
+    check: trigger_push_scope
+    machine: >-
+      For each workflow with a pull_request or merge_group trigger, a `push`
+      trigger must name `branches` (or only `tags`), and every branch pattern
+      must equal the default branch.
+    fix: >-
+      Delete `push: branches: ['**']`, bare `push:` and `push: [main, dev]`
+      from CI workflows. Delete the `dev` branch. Batch PRs and the merge queue
+      already run CI.
+    enforce: block
+
+  - id: CI-02
+    area: triggers
+    title: no re-test on push to main
+    statement: >-
+      Push to the default branch publishes and warms caches; it does not
+      re-run the tests the merge queue already passed.
+    severity: medium
+    kind: static
+    check: trigger_no_main_retest
+    machine: >-
+      A workflow with pull_request or merge_group AND push-to-default-branch
+      triggers fails unless every job is gated by an `if:` naming the push
+      event or the main ref (a publish or cache-warm job).
+    fix: >-
+      Remove `push: main` from the CI workflow; move publishing and the cache
+      warm into a push-only workflow (or gate those jobs with
+      `if: github.event_name == 'push'`).
+    enforce: block
+
+  - id: CI-03
+    area: triggers
+    title: merge_group iff merge queue
+    statement: >-
+      When the default branch has a merge queue, every workflow that produces
+      a required context runs on merge_group. When it has none, no workflow
+      carries a dead merge_group trigger.
+    severity: low
+    kind: settings
+    check: trigger_merge_group_matches_queue
+    machine: >-
+      Reads the merge_queue rule from /rules/branches/{default}. Queue on:
+      each required context's producing workflow has merge_group. Queue off:
+      no workflow has merge_group.
+    fix: Add `merge_group:` to the gate workflow, or remove the dead trigger.
+    enforce: report
+
+  - id: CI-04
+    area: triggers
+    title: expensive suites off pull_request
+    statement: >-
+      Image builds, compose e2e, Playwright and other heavy suites run in
+      merge_group (and nightly), never on the batch PR.
+    severity: medium
+    kind: static
+    check: trigger_heavy_off_pr
+    machine: >-
+      A job that can run on pull_request (the workflow has the trigger and the
+      job's `if:` does not exclude it) fails if its class is docker, bigmem or
+      publish, or a step runs `docker build`, docker/build-push-action, `docker
+      compose up` or `playwright test`.
+    fix: >-
+      Gate the job with `if: github.event_name != 'pull_request'` (it still
+      runs in merge_group), or move it to a merge_group-only workflow.
+    enforce: report
+
+  # --- Runners ---------------------------------------------------------------
+  - id: CI-05
+    area: runners
+    title: runs-on names one class
+    statement: >-
+      Every `runs-on` names exactly one capability class from
+      `runner_classes`. Bare `[self-hosted]` is not a class. GitHub-hosted
+      labels are allowed only in public repositories. graft-dev only in graft.
+    severity: high
+    kind: static
+    check: runner_class_allowed
+    machine: >-
+      Each job's runs-on (string, list, or a `${{ matrix.x }}` resolved
+      against a literal matrix) must equal a class form. Unresolvable
+      expressions fail. `public_only` classes fail in private repositories;
+      `repos`-restricted classes fail elsewhere.
+    fix: >-
+      Pick the class: `runs-on: ci-small` for lint/test/gate jobs,
+      `[self-hosted, rust-heavy]` for big cargo builds, `[self-hosted,
+      docker]` for e2e/smoke, `[self-hosted, publish]` only to publish.
+    enforce: block
+
+  - id: CI-06
+    area: runners
+    title: publish only from main/tags
+    statement: >-
+      The `publish` class is a credential boundary. A publish job runs only on
+      push to the default branch, tags, release or workflow_dispatch.
+    severity: high
+    kind: static
+    check: runner_publish_scope
+    machine: >-
+      A job of class publish fails if its workflow has a pull_request,
+      pull_request_target or merge_group trigger and the job's `if:` does not
+      exclude those events.
+    fix: >-
+      Move e2e, smoke and dry-run jobs from `[docker, publish]` to
+      `[self-hosted, docker]`; keep publish for the pushing job only.
+    enforce: block
+
+  - id: CI-07
+    area: runners
+    title: runtime labels are classes
+    statement: >-
+      The jobs that actually ran in the last 7 days asked for a class label
+      set (catches workflows on other branches and reusable callers).
+    severity: medium
+    kind: runtime
+    check: runtime_runner_labels
+    machine: >-
+      Job records from the latest runs (jobs API `labels`) must equal a class
+      form; reports each distinct offending label set with a count.
+    fix: Same as CI-05, in the workflow that produced the job.
+    enforce: report
+
+  # --- Required-check gate ---------------------------------------------------
+  - id: CI-08
+    area: gate
+    title: one required gate ci
+    statement: >-
+      The default branch requires `ci` (and `policy` while it is a separate
+      reusable workflow) and nothing else. `ci` is an aggregator job with
+      `if: always()` and `needs:` that fails on any failed or cancelled need
+      and accepts skipped.
+    severity: high
+    kind: settings
+    check: gate_shape
+    machine: >-
+      Required contexts from branch protection plus /rules/branches must be
+      non-empty, include `ci`, and be a subset of `required_contexts`. The job
+      producing `ci` must have `needs` and an `if:` containing `always()`.
+    fix: >-
+      Add a gate job (github-policy `templates/ci-gate.yml`), make `ci`
+      required, drop the per-job required contexts.
+    enforce: report
+
+  - id: CI-09
+    area: gate
+    title: required contexts have unfiltered producers
+    statement: >-
+      Every required context is produced by a workflow that always runs on
+      the events the branch needs: no `paths:`/`paths-ignore:` filter on its
+      pull_request or merge_group trigger.
+    severity: high
+    kind: settings
+    check: gate_producers_unfiltered
+    machine: >-
+      Maps each required context to a job (by `name:` or key, matrix and
+      reusable prefixes included). Fails when no producer exists or the
+      producing workflow's pull_request/merge_group trigger is path-filtered.
+    fix: >-
+      Path-scope inside the workflow with a `changes` job and let the gate
+      accept skipped needs; never path-filter the workflow itself.
+    enforce: report
+
+  - id: CI-10
+    area: gate
+    title: merge queue rebase, allgreen
+    statement: >-
+      A merge queue merges with REBASE and ALLGREEN grouping, so every land
+      keeps its commit. Public repositories have a merge queue; private ones
+      on the Team plan merge directly with land-pr.
+    severity: medium
+    kind: settings
+    check: gate_merge_queue
+    machine: >-
+      merge_queue rule parameters must have merge_method REBASE and
+      grouping_strategy ALLGREEN. A public repository with a required context
+      but no merge queue fails.
+    fix: Edit the ruleset's merge queue (operator), or add one.
+    enforce: report
+
+  # --- Jobs and workflows ----------------------------------------------------
+  - id: CI-11
+    area: jobs
+    title: timeout-minutes on every job
+    statement: Every job sets `timeout-minutes`, at most 180.
+    severity: medium
+    kind: static
+    check: job_timeouts
+    machine: >-
+      Every job without `uses:` has an integer `timeout-minutes` (or an
+      expression) <= 180.
+    fix: Add `timeout-minutes:` at about 2x the job's p95.
+    enforce: block
+
+  - id: CI-12
+    area: jobs
+    title: concurrency on every workflow
+    statement: >-
+      Every workflow triggered by pull_request or push declares
+      `concurrency`, and never cancels merge-queue runs.
+    severity: medium
+    kind: static
+    check: workflow_concurrency
+    machine: >-
+      Top-level `concurrency` (or one on every job) is present. If the
+      workflow has merge_group, `cancel-in-progress` must not be the literal
+      `true`.
+    fix: >-
+      `concurrency: {group: '${{ github.workflow }}-${{ github.ref }}',
+      cancel-in-progress: "${{ github.event_name != 'merge_group' }}"}`
+    enforce: block
+
+  - id: CI-13
+    area: jobs
+    title: no job-level continue-on-error
+    statement: >-
+      `continue-on-error` on a whole job is banned; it hides deterministic
+      failures for weeks. Quarantine flaky tests instead (flaky-quarantine).
+    severity: high
+    kind: static
+    check: job_no_continue_on_error
+    machine: Any job with a `continue-on-error` key whose value is not the literal false.
+    fix: >-
+      Fix the job, or quarantine the failing tests and make the job pass; a
+      non-required experimental job lives in a separate workflow.
+    enforce: block
+
+  - id: CI-14
+    area: jobs
+    title: no masked failures
+    statement: >-
+      In the workflows that produce required contexts, no job fails while its
+      run concludes success (continue-on-error at work).
+    severity: medium
+    kind: runtime
+    check: runtime_masked_failures
+    machine: >-
+      For recent completed runs of producer workflows: a job with conclusion
+      failure in a run with conclusion success is a finding.
+    fix: As CI-13.
+    enforce: report
+
+  # --- Policy gate -------------------------------------------------------------
+  - id: CI-15
+    area: policy
+    title: shared policy gate pinned
+    statement: >-
+      The repository calls github-policy `policy.yml` (actionlint, runner
+      classes, timeouts, identity) pinned to a release tag or a commit SHA.
+    severity: medium
+    kind: static
+    check: policy_gate_adopted
+    machine: >-
+      Some job `uses:
+      TheDancingDeveloper-org/github-policy/.github/workflows/policy.yml@<ref>`
+      where ref matches `v<semver>` or a 40-hex SHA (not a branch).
+    fix: Copy `templates/policy-stub.yml` to `.github/workflows/policy.yml`.
+    enforce: report
+
+  - id: CI-16
+    area: policy
+    title: identity checks author and committer only
+    statement: >-
+      Identity policy reads commit author and committer fields and tracked
+      paths and content, never commit message bodies (graft trailers and
+      transcripts live there).
+    severity: medium
+    kind: static
+    check: policy_identity_scope
+    machine: >-
+      Fails on a local migration-policy copy (`*migration-policy*` in the
+      tree) or a workflow `run:` that pipes `%B`/`%b` commit bodies into grep.
+    fix: Delete the local copy; the shared policy.yml carries the identity check.
+    enforce: block
+
+  - id: CI-17
+    area: policy
+    title: workflows pass actionlint
+    statement: Every workflow file passes actionlint (shellcheck off).
+    severity: medium
+    kind: static
+    check: workflows_actionlint
+    machine: >-
+      The auditor runs `actionlint -shellcheck= -pyflakes=` over the default
+      branch's workflow files; any error is a finding.
+    fix: Run `actionlint` locally and fix what it reports.
+    enforce: block
+
+  - id: CI-18
+    area: policy
+    title: third-party actions pinned by SHA
+    statement: >-
+      Third-party actions are pinned to a 40-hex commit SHA. actions/*,
+      github/* and github-policy (tag) may use a tag.
+    severity: low
+    kind: static
+    check: actions_pinned
+    machine: >-
+      Each `uses:` that is not local (`./`), not docker://, and not owned by
+      actions, github or TheDancingDeveloper-org must end in @<40 hex>.
+    fix: Pin with the SHA and a `# vX.Y.Z` comment; Dependabot bumps it.
+    enforce: report
+
+  # --- Caching -------------------------------------------------------------
+  - id: CI-19
+    area: cache
+    title: rust-cache saved from main only
+    statement: >-
+      Swatinem/rust-cache saves only on the default branch (push or the
+      cache-warm job); PR and merge-queue runs restore only.
+    severity: low
+    kind: static
+    check: cache_rust_save_main_only
+    machine: >-
+      Every Swatinem/rust-cache step has `save-if` naming the main ref or the
+      push event. An actions/cache (save) step over target/ or ~/.cargo
+      without such a condition also fails.
+    fix: >-
+      `with: {shared-key: <class>, save-if: "${{ github.ref ==
+      'refs/heads/main' }}"}`; add a cache-warm job on push to main.
+    enforce: report
+
+  - id: CI-20
+    area: cache
+    title: sccache optional
+    statement: >-
+      If sccache is used it is optional: an unreachable cache server slows the
+      build, it never fails it.
+    severity: low
+    kind: static
+    check: cache_sccache_optional
+    machine: >-
+      A workflow that mentions sccache (RUSTC_WRAPPER, sccache-action) must
+      set SCCACHE_IGNORE_SERVER_IO_ERROR to 1/true in workflow or job env.
+    fix: >-
+      Set `SCCACHE_IGNORE_SERVER_IO_ERROR: "1"`, or drop sccache for rust-cache.
+    enforce: block
+
+  # --- Release ---------------------------------------------------------------
+  - id: CI-21
+    area: release
+    title: release dry-run exists
+    statement: >-
+      A repository that releases on tags has a release dry-run (same build,
+      publish false) that runs nightly on main and on PRs touching the release
+      path. A tag is never the first run of the release build.
+    severity: medium
+    kind: static
+    check: release_dry_run_present
+    machine: >-
+      If any workflow triggers on push tags or release, some workflow whose
+      file or name contains "dry-run"/"dry run" has a schedule trigger.
+    fix: Add a caller of github-policy `release-dry-run.yml` (templates/release-dry-run-stub.yml).
+    enforce: report
+
+  - id: CI-22
+    area: release
+    title: nightly dry-run green
+    statement: The latest scheduled release dry-run on main succeeded, and none was red more than 2 days running.
+    severity: medium
+    kind: runtime
+    check: runtime_dry_run_green
+    machine: >-
+      Of the dry-run workflow's schedule runs on the default branch in the
+      last 7 days, the latest is success and no 3 consecutive ones failed.
+    fix: Fix the release path; a red nightly blocks tagging.
+    enforce: report
+
+  # --- Dependencies ----------------------------------------------------------
+  - id: CI-23
+    area: deps
+    title: no private source at CI time
+    statement: >-
+      CI never fetches a private source at build or test time (no clone of a
+      private repo, no git dependency install from one) and never passes a
+      secret as a Docker build-arg. Private dependencies come from a registry
+      with a read-only token, or a pinned artifact.
+    severity: high
+    kind: static
+    check: deps_no_private_fetch
+    machine: >-
+      `run:` blocks and `with:` values are scanned for git clone, `cargo
+      install --git`, `pip install git+`, `npm i github:` and Forgejo
+      (repo.indexarr.net) URLs that name a private org repository or any
+      Forgejo repository; `build-args` containing `secrets.` fail.
+    fix: >-
+      Publish the dependency to the Forgejo registry and pin it; pass tokens
+      with BuildKit `secrets:`; take bundled tools from a pinned GHCR artifact.
+    enforce: block
+
+  - id: CI-24
+    area: deps
+    title: CodeQL on releases only
+    statement: >-
+      CodeQL runs only when a release build is cut (tags, release,
+      workflow_dispatch). Never on pull_request, merge_group, push to a branch
+      or a schedule, and never a required check.
+    severity: medium
+    kind: static
+    check: codeql_release_only
+    machine: >-
+      A workflow using github/codeql-action may have only push-with-tags-only,
+      release and workflow_dispatch triggers.
+    fix: >-
+      Change the CodeQL workflow's `on:` to `push: tags: ['v*']` plus
+      `workflow_dispatch`.
+    enforce: block

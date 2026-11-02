@@ -1,0 +1,72 @@
+# CI guardrails exemptions (WI-3087).
+#
+# A repository outside the standard needs a specific exemption: one rule, one
+# repository, a reason, an owner and an expiry (operator, 2026-11-02). The
+# auditor reads this file from `main` on every audit, so a merged change takes
+# effect within an hour without a redeploy; the policy gate reads it from
+# `main` too.
+#
+# - `rule` is one CI-NN id from rules.yaml. There is no wildcard.
+# - `workflow` / `job` narrow it (file name under .github/workflows, job key).
+#   Without them the exemption covers the whole repository for that rule.
+# - `expires` is at most `max_exemption_days` (rules.yaml) after `created`.
+#   An expired exemption suppresses nothing, and shows as expired.
+# - `owner` is the GitHub handle (or `oversight`) who will remove it.
+# - Validated by schema exemptions.schema.json and auditor/tests.
+#
+# Schema: exemptions.schema.json. Keep entries sorted by repo, then rule.
+version: 1
+exemptions:
+  - repo: cadastre
+    rule: CI-05
+    workflow: ci.yaml
+    reason: >-
+      Public repository whose own tests (tests/test_release_workflow.py) assert
+      every non-release job is NOT self-hosted, because pull_request builds
+      untrusted fork code and the self-hosted pool is persistent and on the
+      tailnet. Hosted runners are now allowed for public repos, so the
+      remaining gap is only the `-latest` label; pin ubuntu-24.04 and drop this.
+      Carried over from runner-exceptions.json.
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-02-17
+  - repo: cadastre
+    rule: CI-05
+    workflow: publish.yml
+    reason: >-
+      Same tested invariant as cadastre/ci.yaml (self-hosted only behind
+      refs/tags/v*). Carried over from runner-exceptions.json.
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2027-02-17
+  - repo: FarmEggs
+    rule: CI-05
+    workflow: ci.yml
+    job: mobile
+    reason: >-
+      flutter build apk needs a JDK and the Android SDK, which no self-hosted
+      runner image ships (verified 2026-08-17). Move when the runner image
+      ships them. Carried over from runner-exceptions.json.
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2026-11-17
+  - repo: FarmEggs
+    rule: CI-05
+    workflow: ci.yml
+    job: web
+    reason: >-
+      The browser suite needs google-chrome at a pinned path plus npm for
+      playwright-core, absent from every runner image (verified 2026-08-17).
+      Carried over from runner-exceptions.json.
+    owner: thedancingdeveloper
+    created: 2026-11-02
+    expires: 2026-11-17
+  - repo: graft
+    rule: CI-10
+    reason: >-
+      The merge queue is SQUASH; the operator decided (2026-11-02) it moves to
+      REBASE and oversight is making that ruleset change separately. Delete
+      this entry when the ruleset says REBASE.
+    owner: oversight
+    created: 2026-11-02
+    expires: 2026-11-16

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/TheDancingDeveloper-org/github-policy/ci-standard/exemptions.schema.json",
+  "title": "CI guardrails exemptions",
+  "type": "object",
+  "required": ["version", "exemptions"],
+  "additionalProperties": false,
+  "properties": {
+    "version": {"const": 1},
+    "exemptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["repo", "rule", "reason", "owner", "created", "expires"],
+        "additionalProperties": false,
+        "properties": {
+          "repo": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+$", "description": "Repository name (no owner)."},
+          "rule": {"type": "string", "pattern": "^CI-[0-9]{2}$", "description": "One rule id from rules.yaml; no wildcard."},
+          "workflow": {"type": "string", "pattern": "^[A-Za-z0-9_.-]+\\.ya?ml$", "description": "Optional: workflow file name under .github/workflows."},
+          "job": {"type": "string", "minLength": 1, "description": "Optional: job key; requires workflow."},
+          "reason": {"type": "string", "minLength": 40, "description": "Why, and what ends it."},
+          "owner": {"type": "string", "minLength": 2, "description": "GitHub handle or 'oversight'."},
+          "created": {"type": "string", "format": "date"},
+          "expires": {"type": "string", "format": "date", "description": "At most max_exemption_days after created."}
+        },
+        "dependentRequired": {"job": ["workflow"]}
+      }
+    }
+  }
+}

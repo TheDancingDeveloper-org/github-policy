@@ -30,6 +30,42 @@
       ],
       "reason": "The browser suite and the M1a acceptance run need google-chrome at the path CHROME_EXECUTABLE/EGGS_WEB_CHROME pin, plus npm for playwright-core. Verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
       "expires_on": "2026-11-17"
+    },
+    {
+      "repo": "github-policy",
+      "workflow": "audit.yml",
+      "reason": "Public repository; GitHub-hosted runners are allowed for light jobs in public repos (operator, 2026-11-02). This legacy line-based checker predates that decision; ci-auditor rule CI-05 (ci-standard) judges these jobs instead.",
+      "expires_on": "2027-04-30"
+    },
+    {
+      "repo": "github-policy",
+      "workflow": "ci-auditor.yml",
+      "reason": "Public repository; GitHub-hosted runners are allowed for light jobs in public repos (operator, 2026-11-02). This legacy line-based checker predates that decision; ci-auditor rule CI-05 (ci-standard) judges these jobs instead.",
+      "expires_on": "2027-04-30"
+    },
+    {
+      "repo": "github-policy",
+      "workflow": "policy.yml",
+      "reason": "Reusable workflow whose `runs-on` comes from a `runs-on` input (default a ci-standard runner class). This legacy line-based checker reads the input's key as a runner selection; ci-auditor rule CI-05 resolves the default instead.",
+      "expires_on": "2027-04-30"
+    },
+    {
+      "repo": "github-policy",
+      "workflow": "rust-ci.yml",
+      "reason": "Reusable workflow whose `runs-on` comes from a `runs-on` input (default a ci-standard runner class). This legacy line-based checker reads the input's key as a runner selection; ci-auditor rule CI-05 resolves the default instead.",
+      "expires_on": "2027-04-30"
+    },
+    {
+      "repo": "github-policy",
+      "workflow": "image.yml",
+      "reason": "Reusable workflow whose `runs-on` comes from a `runs-on` input (default a ci-standard runner class). This legacy line-based checker reads the input's key as a runner selection; ci-auditor rule CI-05 resolves the default instead.",
+      "expires_on": "2027-04-30"
+    },
+    {
+      "repo": "github-policy",
+      "workflow": "release-dry-run.yml",
+      "reason": "Reusable workflow whose `runs-on` comes from a `runs-on` input (default a ci-standard runner class). This legacy line-based checker reads the input's key as a runner selection; ci-auditor rule CI-05 resolves the default instead.",
+      "expires_on": "2027-04-30"
     }
   ]
 }

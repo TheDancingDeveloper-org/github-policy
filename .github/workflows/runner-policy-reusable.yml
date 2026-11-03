@@ -47,7 +47,7 @@ permissions:
 
 jobs:
   runner-policy:
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, linux]
     timeout-minutes: 10
     steps:
       - name: Check out the calling repository

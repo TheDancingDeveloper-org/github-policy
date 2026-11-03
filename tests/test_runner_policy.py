@@ -17,7 +17,8 @@ TODAY = "2026-08-17"
 
 
 def audit(workflows: dict[str, str], exceptions: dict | None = None,
-          repo: str = "example", today: str = TODAY) -> tuple[int, str]:
+          repo: str = "example", today: str = TODAY,
+          extra: tuple[str, ...] = ()) -> tuple[int, str]:
     with tempfile.TemporaryDirectory() as tmp:
         root = Path(tmp)
         (root / ".github" / "workflows").mkdir(parents=True)
@@ -27,7 +28,7 @@ def audit(workflows: dict[str, str], exceptions: dict | None = None,
         exceptions_path.write_text(json.dumps(exceptions or {"schema_version": 1, "exceptions": []}))
         result = subprocess.run(
             [sys.executable, str(CHECKER), str(root), "--repo", repo,
-             "--exceptions", str(exceptions_path), "--today", today],
+             "--exceptions", str(exceptions_path), "--today", today, *extra],
             capture_output=True, text=True,
         )
         return result.returncode, result.stdout + result.stderr
@@ -193,3 +194,33 @@ if __name__ == "__main__":
             failures += 1
             print(f"FAIL {name}: {error}")
     sys.exit(1 if failures else 0)
+
+
+def test_arc_scale_set_name_passes():
+    code, out = audit({"ci.yml": HOSTED.replace("ubuntu-latest", "ci-small")})
+    assert code == 0, out
+
+
+def test_arc_name_with_other_labels_is_not_arc():
+    code, out = audit({"ci.yml": HOSTED.replace("ubuntu-latest", "[ci-small, docker]")})
+    assert code == 1
+    assert "not explicitly self-hosted" in out
+
+
+def test_bare_self_hosted_warns_by_default():
+    code, out = audit({"ci.yml": HOSTED.replace("ubuntu-latest", "[self-hosted]")})
+    assert code == 0, out
+    assert "bare self-hosted selection" in out
+
+
+def test_bare_self_hosted_fails_when_class_required():
+    code, out = audit({"ci.yml": HOSTED.replace("ubuntu-latest", "[self-hosted, linux]")},
+                      extra=("--require-class",))
+    assert code == 1
+    assert "names no runner class" in out
+
+
+def test_class_label_satisfies_require_class():
+    code, out = audit({"ci.yml": HOSTED.replace("ubuntu-latest", "[self-hosted, rust-heavy]")},
+                      extra=("--require-class",))
+    assert code == 0, out

@@ -30,6 +30,17 @@ from pathlib import Path
 # constant stays for the benefit of anyone tempted to inline it again.
 EXPR = "${{"
 
+# ARC runner scale sets are selected by their set name alone (`runs-on:
+# ci-small`). They are self-hosted, but GitHub does not give them the
+# `self-hosted` label, so the name itself is the allowed form.
+ARC_CLASSES = {"ci-small"}
+
+# Capability class labels (ci-standard/rules.yaml `runner_classes`). A
+# self-hosted selection should name one; bare `[self-hosted]` matches any
+# runner, including ones sized for something else.
+CLASS_LABELS = {"rust-heavy", "docker", "bigmem", "publish", "tailnet",
+                "windows", "graft-dev", "rdpapp-sign", "node-b"}
+
 
 def indent(line: str) -> int:
     return len(line) - len(line.lstrip(" "))
@@ -133,6 +144,9 @@ def main() -> int:
     parser.add_argument("--exceptions", default="",
                         help="path to runner-exceptions.json")
     parser.add_argument("--today", default=date.today().isoformat())
+    parser.add_argument("--require-class", action="store_true",
+                        help="fail a self-hosted selection that names no "
+                             "runner class (report-only without this)")
     args = parser.parse_args()
 
     root = Path(args.root)
@@ -151,15 +165,27 @@ def main() -> int:
         print("no workflows found; nothing to audit")
 
     excused_count = 0
+    bare = 0
     for path in workflows:
         lines = path.read_text(encoding="utf-8").splitlines()
         for number, line in enumerate(lines):
             if not re.match(r"^\s*runs-on\s*:", line, re.I):
                 continue
             selected = values(lines, number)
-            hosted = not any(v.lower() == "self-hosted" for v in selected)
+            lowered = [v.lower() for v in selected]
+            arc = len(lowered) == 1 and lowered[0] in ARC_CLASSES
+            hosted = not arc and "self-hosted" not in lowered
             dynamic = any(EXPR in v for v in selected)
             if not hosted and not dynamic:
+                if not arc and not CLASS_LABELS.intersection(lowered):
+                    bare += 1
+                    message = (f"{path}:{number + 1}: bare self-hosted selection "
+                               f"names no runner class -> {selected}")
+                    if args.require_class:
+                        print(message, file=sys.stderr)
+                        failed = True
+                    else:
+                        print(f"warning: {message}")
                 continue
 
             job = job_at(lines, number)
@@ -185,15 +211,22 @@ def main() -> int:
         print("", file=sys.stderr)
         print("Organization policy: every job must select a self-hosted runner "
               "explicitly, e.g.", file=sys.stderr)
-        print("  runs-on: [self-hosted, node-b, linux, x64]", file=sys.stderr)
-        print("  runs-on: [self-hosted, node-b, linux, x64, docker, publish]  "
-              "# needs Docker", file=sys.stderr)
+        print("  runs-on: ci-small                    # lint, unit tests, gates",
+              file=sys.stderr)
+        print("  runs-on: [self-hosted, rust-heavy]   # large cargo builds",
+              file=sys.stderr)
+        print("  runs-on: [self-hosted, docker]       # e2e, container smoke",
+              file=sys.stderr)
+        print("  runs-on: [self-hosted, docker, publish]  # push, deploy, sign",
+              file=sys.stderr)
         print("", file=sys.stderr)
         print("An owner-approved exception goes in github-policy/"
               "runner-exceptions.json.", file=sys.stderr)
         return 1
 
     suffix = f", {excused_count} excused" if excused_count else ""
+    if bare:
+        suffix += f", {bare} bare self-hosted selection(s) to classify"
     print(f"ok: {len(workflows)} workflow file(s) audited, all self-hosted{suffix}")
     return 0
 

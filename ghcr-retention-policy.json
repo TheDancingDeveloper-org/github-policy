@@ -8,7 +8,7 @@
   "stable_channels": ["latest"],
   "packages": [
     "rustnzbd", "indexarr-rs", "rusttorrent", "egressy", "egressy-external-probe", "ngms", "aidevenv",
-    "rdpapp-gateway", "rdpapp-web", "ausfarms-api", "ausfarms-web", "paddockmuster-site", "vogt", "vogt-stack",
+    "rdpapp-gateway", "rdpapp-web", "ausfarms-api", "graft", "ausfarms-web", "paddockmuster-site", "vogt", "vogt-stack",
     "vogt-base/node", "vogt-base/python", "vogt-base/rust", "vogt-base/ubuntu", "vogt-pod-base", "vogt-demo"
   ],
   "paired_packages": [

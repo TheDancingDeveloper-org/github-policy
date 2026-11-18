@@ -14,24 +14,6 @@
       "expires_on": "2027-02-17"
     },
     {
-      "repo": "FarmEggs",
-      "workflow": "ci.yml",
-      "jobs": [
-        "mobile"
-      ],
-      "reason": "flutter build apk --debug needs a JDK and the Android SDK. Neither is on any self-hosted runner and subosito/flutter-action does not install them; verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
-      "expires_on": "2026-11-17"
-    },
-    {
-      "repo": "FarmEggs",
-      "workflow": "ci.yml",
-      "jobs": [
-        "web"
-      ],
-      "reason": "The browser suite and the M1a acceptance run need google-chrome at the path CHROME_EXECUTABLE/EGGS_WEB_CHROME pin, plus npm for playwright-core. Verified absent on all three runner containers 2026-08-17. Move when the runner image ships them.",
-      "expires_on": "2026-11-17"
-    },
-    {
       "repo": "github-policy",
       "workflow": "audit.yml",
       "reason": "Public repository; GitHub-hosted runners are allowed for light jobs in public repos (operator, 2026-11-02). This legacy line-based checker predates that decision; ci-auditor rule CI-05 (ci-standard) judges these jobs instead.",

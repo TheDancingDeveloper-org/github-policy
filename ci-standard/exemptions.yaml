@@ -1047,28 +1047,6 @@ exemptions:
     owner: thedancingdeveloper
     created: 2026-11-02
     expires: 2027-01-31
-  - repo: FarmEggs
-    rule: CI-05
-    workflow: ci.yml
-    job: mobile
-    reason: >-
-      flutter build apk needs a JDK and the Android SDK, which no self-hosted
-      runner image ships (verified 2026-08-17). Move when the runner image
-      ships them. Carried over from runner-exceptions.json.
-    owner: thedancingdeveloper
-    created: 2026-11-02
-    expires: 2026-11-17
-  - repo: FarmEggs
-    rule: CI-05
-    workflow: ci.yml
-    job: web
-    reason: >-
-      The browser suite needs google-chrome at a pinned path plus npm for
-      playwright-core, absent from every runner image (verified 2026-08-17).
-      Carried over from runner-exceptions.json.
-    owner: thedancingdeveloper
-    created: 2026-11-02
-    expires: 2026-11-17
   - repo: fluent2-egui
     rule: CI-05
     reason: "small repo pending template adoption or archive (operator 2026-11-02)"
@@ -1147,15 +1125,6 @@ exemptions:
     owner: thedancingdeveloper
     created: 2026-11-02
     expires: 2027-04-30
-  - repo: graft
-    rule: CI-10
-    reason: >-
-      The merge queue is SQUASH; the operator decided (2026-11-02) it moves to
-      REBASE and oversight is making that ruleset change separately. Delete
-      this entry when the ruleset says REBASE.
-    owner: oversight
-    created: 2026-11-02
-    expires: 2026-11-16
   - repo: komodo
     rule: CI-01
     reason: "small repo pending template adoption or archive (operator 2026-11-02)"
